@@ -1,0 +1,47 @@
+<ion-menu contentId="main-content" >
+  <ion-header>
+    <ion-toolbar class="background-principal" style="--color:white">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+
+    <ion-accordion-group [multiple]="true" *ngFor="let lista of menu">
+      <ion-accordion value="first" style="margin-bottom: 5px;">
+        <ion-item slot="header" color="light">
+          <ion-label>{{lista.menu}}</ion-label>
+        </ion-item>
+
+        <div slot="content" *ngFor="let detalle of lista.children" style="padding: 0px 15px;">
+          <ion-list style="padding: 0px;">
+            <ion-item >
+              <ion-button expand="full" fill="clear" style="width: 100%;" shape="round" routerLink={{detalle.ruta}} (click)="cerrar()">
+                <ion-label>{{ detalle.menu }}</ion-label>
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+              </ion-button>
+
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-accordion>
+
+    </ion-accordion-group>
+
+  </ion-content>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar class="background-principal" style="--color:white">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Sistema Inventario</ion-title>
+      <ion-buttons slot="end" routerLink="/login">
+        <ion-icon name="exit-outline" style="font-size: 22px;cursor: pointer;"></ion-icon>
+      </ion-buttons>  
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding"> 
+      <router-outlet></router-outlet>
+  </ion-content>
+</div>

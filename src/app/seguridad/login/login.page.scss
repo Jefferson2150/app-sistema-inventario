@@ -1,0 +1,40 @@
+.contenedor-login {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+.div-img {
+    width: 60%;
+    text-align: left;
+}
+
+.div-datos-login {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-img {
+    height: 100%;
+    border: 0;
+    width: 100%;
+    object-fit: scale-down;
+}
+
+.card-login {
+    width: 80%;
+    box-shadow: none;
+}
+
+.img-datos {
+    width: 246px;
+    margin: 0 auto;
+    display: block;
+    border-radius: 50%;
+    
+}
+
