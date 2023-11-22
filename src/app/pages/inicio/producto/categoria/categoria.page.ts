@@ -13,7 +13,16 @@ export class CategoriaPage implements OnInit {
   public pager        : any = {};
   categorias = [
     { id: 1, nombre: 'Gaseosa', estado:'Activo', estado_n:0},
-    { id: 1, nombre: 'Aceite', estado:'Inactivo', estado_n:1}
+    { id: 1, nombre: 'Aceite', estado:'Inactivo', estado_n:1},
+    { id: 1, nombre: 'Aceite', estado:'Inactivo', estado_n:1},
+    { id: 1, nombre: 'Aceite', estado:'Inactivo', estado_n:1},
+    { id: 1, nombre: 'Aceite', estado:'Inactivo', estado_n:1},
+    { id: 1, nombre: 'Aceite', estado:'Inactivo', estado_n:1},
+    { id: 1, nombre: 'Aceite', estado:'Inactivo', estado_n:1},
+    { id: 1, nombre: 'Aceite', estado:'Inactivo', estado_n:1},
+    { id: 1, nombre: 'Aceite', estado:'Inactivo', estado_n:1},
+    { id: 1, nombre: 'Aceite', estado:'Inactivo', estado_n:1},
+    { id: 1, nombre: 'Aceite', estado:'Inactivo', estado_n:1}
   ];
   sin_resultado = false;
   con_resultado = true;

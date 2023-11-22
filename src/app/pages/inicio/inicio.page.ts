@@ -24,7 +24,16 @@ export class InicioPage implements OnInit {
       { menu: 'Cliente', id: 1, ruta: 'categoria'},
       { menu: 'Reporte', id: 2, ruta: 'categoria'}
     ]
-  }]
+  },
+  {
+    menu: 'Compras',
+    id:1,
+    children: [
+      { menu: 'Proveedores', id: 1, ruta: 'proveedores'},
+      { menu: 'Compras', id: 2, ruta: 'compras'}
+    ]
+  },
+]
   constructor(private router: Router,private menuCtrl: MenuController) { }
 
   ngOnInit() {
