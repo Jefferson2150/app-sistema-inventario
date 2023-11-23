@@ -47,7 +47,7 @@
             </ion-chip>
           </ion-col>
           <ion-col style="justify-content: center;display: flex;" size="3" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">
-
+            <ion-icon name="sync-outline" style="font-size: 17px;cursor: pointer;"></ion-icon>
               
           </ion-col>
         </ion-row>
@@ -91,7 +91,7 @@
   </div>
 
 
-  <ion-modal [isOpen]="isModalOpen" backdropDismiss="false" [enterAnimation]="enterAnimation" [leaveAnimation]="leaveAnimation">
+  <ion-modal [isOpen]="isModalOpen" backdropDismiss="false" [enterAnimation]="enterAnimation" [leaveAnimation]="leaveAnimation" class="modal-categoria">
     <ng-template>
 <!--       <ion-header>
         <ion-toolbar>
@@ -113,11 +113,22 @@
           </ion-header>
         </div>
         <div class="ion-padding">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni illum quidem recusandae ducimus quos
-            reprehenderit. Veniam, molestias quos, dolorum consequuntur nisi deserunt omnis id illo sit cum qui. Eaque,
-            dicta.
-          </p>
+          
+          <ion-list>
+            <ion-list>
+              <ion-item>
+                <ion-input label="Nombre categoría" placeholder="Ingrese nombre" ></ion-input>
+              </ion-item>
+          
+            </ion-list>
+          </ion-list>
+
+          <div style="text-align: center;">
+            <ion-button style="width: 200px;height: 30px;    font-size: 11px !important;align-items: center;" class="background-principal" (click)="setOpen(true)" >
+              <ion-label>REGISTRAR</ion-label>
+            </ion-button>
+          </div>
+
         </div>
 
       </ion-content>

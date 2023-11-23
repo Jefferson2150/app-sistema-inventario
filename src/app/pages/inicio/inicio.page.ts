@@ -10,11 +10,17 @@ import { MenuController } from '@ionic/angular';
 export class InicioPage implements OnInit {
 
   menu = [{
-    menu: 'Producto',
+    menu: 'Almacen',
     id:1,
     children: [
       { menu: 'Categoría', id: 2, ruta: 'categoria'},
       { menu: 'Producto', id: 1, ruta: 'producto'}
+    ]
+  },{
+    menu: 'Ventas',
+    id:1,
+    children: [
+      { menu: 'Ventas', id: 2, ruta: 'ventas'}
     ]
   },
   {
