@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AnimationController } from '@ionic/angular';
+import { AnimationController, ToastController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
+import { Categoria } from '../estructura/clases/categoria';
+import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +11,28 @@ export class ServiceService {
 
   Url = environment.urlPrincipal+'/api/v1';
 
-  constructor(private animationCtrl: AnimationController) { }
+  constructor(private animationCtrl: AnimationController,private toastController?: ToastController,private http?:HttpClient) { }
 
-  getPager(totalItems: number, currentPage: number = 1, pageSize: number = 9) {
+  registrarCategoria(categoria:Categoria){
+    return this.http!.post<any>(this.Url+"/registrar_categoria",categoria);
+  }
+
+  listarCategoria(){
+    //return this.http.get<any>(this.Url+`/obtener_resultados?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`);
+    return this.http!.get<any>(this.Url+`/obtener_categorias`);
+  }
+
+  editarCategoria(id:number, categoria:Categoria){
+    //return this.http.get<any>(this.Url+`/obtener_resultados?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`);
+    return this.http!.put<any>(this.Url+`/editar_eliminar_categoria/`+id+`/edit`,categoria);
+  }
+
+  eliminarCategoria(id:number, categoria:Categoria){
+    //return this.http.get<any>(this.Url+`/obtener_resultados?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`);
+    return this.http!.put<any>(this.Url+`/editar_eliminar_categoria/`+id+`/deleted`,categoria);
+  }
+
+  getPager(totalItems: number, currentPage: number = 1, pageSize: number = 3) {
     // calculate total pagess
     let totalPages = Math.ceil(totalItems / pageSize);
     // ensure current page isn't out of range
@@ -84,6 +105,17 @@ export class ServiceService {
   leaveAnimation = (baseEl: HTMLElement) => {
     return this.enterAnimation(baseEl).direction('reverse');
   };
+
+  async toast(position:any, descripcion:any,color:any) {
+    const toast = await this.toastController!.create({
+      message: descripcion,
+      duration: 1500,
+      color: color,
+      position: position,
+    });
+
+    await toast.present();
+  }
 
   
 }

@@ -1,5 +1,10 @@
 
+
+
 <ion-content [fullscreen]="true">
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "ball-scale-multiple" [fullScreen] = "true"
+   style="z-index: 999999 !important;"><p style="color: white" > Loading... </p>
+</ngx-spinner>
   <div >
     <ion-item style="width: 100%;display: flex;
     flex-direction: row;">
@@ -14,51 +19,59 @@
       </div>
     </ion-item>
     <ion-item>
-      <ion-searchbar placeholder="Buscar categoría" style="    --border-radius: 8px;"></ion-searchbar>
+      <ion-searchbar (ionInput)="busquedaGeneral()" [(ngModel)]="texto" placeholder="Buscar categoría" style="    --border-radius: 8px;"></ion-searchbar>
     </ion-item>
 
     <ion-list>
       <ion-item class="col-text div-item tamanio-letra-item">
         <ion-row style="width: 100%" class="ion-align-items-center">
-          <ion-col size="6" size-lg="8" size-md="8" size-sm="8" class="div-detalle-producto"><strong>NOMBRE CATEGORIA</strong></ion-col>
+          <ion-col size="6" size-lg="8" size-md="8" size-sm="8" class="div-detalle-producto"><strong>DETALLE CATEGORIA</strong></ion-col>
           <ion-col size="3" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>ESTADO</strong></ion-col>
           <ion-col style="text-align: center;" size="3" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>ACCIÓN</strong></ion-col>
         </ion-row>
       </ion-item>
 
+      
+      <ion-row style="width: 100%;    justify-content: center;
+       margin-top: 10px;" class="ion-align-items-center" *ngIf="pagedItems.length == 0">
+        <div style="    color: red;
+        font-size: 20px;">
+          No existe resultados
+        </div>
+      </ion-row>
       <ion-item *ngFor="let lista_categoria of pagedItems; let indice=index;" [hidden]="sin_resultado" class="tamanio-letra-item">
+
         <ion-row style="width: 100%" class="ion-align-items-center">
           <ion-col size="6" size-lg="8" size-md="8" size-sm="8" class="div-detalle-producto">
             <div>
               <span>
-                {{lista_categoria.nombre}}
+                <strong>Categoría: </strong> {{lista_categoria.cat_nombre}}
+             </span>
+            </div>
+            <div>
+              <span>
+                <strong>Descripción: </strong> {{lista_categoria.cat_descripcion}}
              </span>
             </div>
           </ion-col>
           <ion-col size="3" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">
             
-            <ion-chip *ngIf="lista_categoria.estado_n == 1" style="--background:#bb0303;--color:white;    width: 100px;">  
+            <ion-chip *ngIf="lista_categoria.cat_estado == 1" style="--background:#bb0303;--color:white;    width: 100px;">  
               <ion-icon name="alert-outline" style="color: white;"></ion-icon>
-              <ion-label >{{lista_categoria.estado}}</ion-label>
+              <ion-label >Inactivo</ion-label>
             </ion-chip>
-            <ion-chip *ngIf="lista_categoria.estado_n == 0" style="--background:#205620;--color:white;    width: 100px;">  
+            <ion-chip *ngIf="lista_categoria.cat_estado == 0" style="--background:#205620;--color:white;    width: 100px;">  
               <ion-icon name="checkmark-outline" style="color: white;"></ion-icon>
-              <ion-label>{{lista_categoria.estado}}</ion-label>
+              <ion-label >Activo</ion-label>
             </ion-chip>
           </ion-col>
           <ion-col style="justify-content: center;display: flex;" size="3" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">
-            <ion-icon name="sync-outline" style="font-size: 17px;cursor: pointer;"></ion-icon>
+            <ion-icon name="sync-outline" style="font-size: 17px;cursor: pointer;" (click)="editar(lista_categoria)"></ion-icon>
+            <ion-icon name="trash-bin-outline" style="margin-left: 20px;font-size: 17px;cursor: pointer;" (click)="eliminar(lista_categoria)"></ion-icon>
               
           </ion-col>
         </ion-row>
       </ion-item>
-     <!--  <ion-item [hidden]="con_resultado">
-        <ion-label>
-          <div style="text-align: center" >
-            <h4 style="color: red">Ningún producto encontrado</h4>
-          </div>
-        </ion-label>
-      </ion-item> -->
 
     </ion-list>
     <ion-item>
@@ -67,19 +80,19 @@
           <nav>
             <ul *ngIf="pager.pages && pager.pages.length" class="pagination pagination-sm paginacion-posicion">
               <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
-                <ion-icon name="play-skip-back-outline" class="icono-paginacion page-link a-paginacion" (click)="setPage(1)"></ion-icon>
+                <ion-icon name="play-skip-back-outline" class="icono-paginacion page-link a-paginacion" (click)="setPage1(1)"></ion-icon>
               </li>
               <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
-                <ion-icon name="caret-back-outline" class="icono-paginacion page-link a-paginacion" (click)="setPage(pager.currentPage - 1)"></ion-icon>
+                <ion-icon name="caret-back-outline" class="icono-paginacion page-link a-paginacion" (click)="setPage1(pager.currentPage - 1)"></ion-icon>
               </li>
               <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
-                <span class="numero-paginacion page-link a-paginacion" (click)="setPage(page)">{{page}}</span>
+                <span class="numero-paginacion page-link a-paginacion" (click)="setPage1(page)">{{page}}</span>
               </li>
               <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                <ion-icon name="caret-forward-outline" class="icono-paginacion page-link a-paginacion" (click)="setPage(pager.currentPage + 1)" ></ion-icon>
+                <ion-icon name="caret-forward-outline" class="icono-paginacion page-link a-paginacion" (click)="setPage1(pager.currentPage + 1)" ></ion-icon>
               </li>
               <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                  <ion-icon name="play-skip-forward-outline" class="icono-paginacion page-link a-paginacion" (click)="setPage(pager.totalPages)"></ion-icon>
+                  <ion-icon name="play-skip-forward-outline" class="icono-paginacion page-link a-paginacion" (click)="setPage1(pager.totalPages)"></ion-icon>
               </li>
           </ul>
           </nav>
@@ -91,21 +104,13 @@
   </div>
 
 
-  <ion-modal [isOpen]="isModalOpen" backdropDismiss="false" [enterAnimation]="enterAnimation" [leaveAnimation]="leaveAnimation" class="modal-categoria">
+  <ion-modal [isOpen]="isModalOpen" backdropDismiss="false" [enterAnimation]="enterAnimation" [leaveAnimation]="leaveAnimation" class="modal-categoria" >
     <ng-template>
-<!--       <ion-header>
-        <ion-toolbar>
-          <ion-title>Agregar Categoría</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="setOpen(false)">Cerrar</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header> -->
       <ion-content >
         <div>
           <ion-header>
             <ion-toolbar class="background-principal" style="--color:white">
-              <ion-title>Agregar categoría</ion-title>
+              <ion-title>{{agregar}}</ion-title>
               <ion-buttons slot="end" (click)="setOpen(false)">
                 <ion-icon name="close-outline" style="font-size: 30px;cursor: pointer;"></ion-icon>
               </ion-buttons>  
@@ -113,27 +118,36 @@
           </ion-header>
         </div>
         <div class="ion-padding">
-          
-          <ion-list>
+          <form [formGroup]="myFormCategoria" #formDirective="ngForm"  class="formulario">
             <ion-list>
-              <ion-item>
-                <ion-input label="Nombre categoría" placeholder="Ingrese nombre" ></ion-input>
-              </ion-item>
-          
+              <ion-list>
+                <ion-item>
+                  <ion-label> <strong>Nombre de categoría * </strong></ion-label>
+                  <ion-input formControlName="nombreCategoria" placeholder="Ingrese nombre" ></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label> <strong>Descripción</strong></ion-label>
+                  <ion-input formControlName="descripcionCategoria" placeholder="Ingrese descripción" ></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label style="max-width: 80px;"> <strong>Estado </strong></ion-label>
+                  <ion-toggle [checked]="marcar" (ionChange)="marcarEstado($event)"></ion-toggle>
+                </ion-item>
+            
+              </ion-list>
             </ion-list>
-          </ion-list>
-
-          <div style="text-align: center;">
-            <ion-button style="width: 200px;height: 30px;    font-size: 11px !important;align-items: center;" class="background-principal" (click)="setOpen(true)" >
-              <ion-label>REGISTRAR</ion-label>
-            </ion-button>
-          </div>
+  
+            <div style="text-align: center;">
+              <ion-button style="width: 200px;height: 30px;    font-size: 11px !important;align-items: center;" class="background-principal" (click)="registrar()" >
+                <ion-label>{{botonAgregar}}</ion-label>
+              </ion-button>
+            </div>
+  
+          </form>
 
         </div>
 
       </ion-content>
     </ng-template>
   </ion-modal>
-
-  
 </ion-content>

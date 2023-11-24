@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  urlPrincipal: 'http://192.168.0.26:5400'
+  urlPrincipal: 'http://127.0.0.1:5000'
 };
 
