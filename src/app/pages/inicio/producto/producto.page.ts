@@ -99,26 +99,35 @@ export class ProductoPage implements OnInit {
     this.producto.prod_cantidad    = this.myFormProducto.value.cantidad;
     this.marcar ? this.producto.prod_estado = 0 : this.producto.prod_estado = 1;
     console.log("producto",this.producto);
-    this.spinnerService.show();
-    this.isModalOpen = false;
+
     if(this.agregarestado){
-      this.servicio.registrarProducto(this.producto).subscribe( respuesta => {
-        if(respuesta.est == 'success'){
-          setTimeout(() => {
-            this.spinnerService.hide();
-            this.servicio.toast('top',respuesta.message,'success');
-            this.myFormProducto.reset();
-            this.listarProductos();
-          }, 1000);
-        }else{
-          setTimeout(() => {
-            this.spinnerService.hide();
-            this.isModalOpen = true;
-            this.servicio.toast('top',respuesta.message,'error')
-          }, 1000);
-        }
-      })
+      if(this.producto.prod_codigo == '' || this.producto.prod_nombre == ''){
+        this.servicio.toast('top','Debe ingresar correctamente los datos obligatorios (*)','warning');
+      }else if(this.editar_categoria == 0){
+        this.servicio.toast('top','Debe seleccionar una categoría','warning');
+      }else{
+        this.spinnerService.show();
+        this.isModalOpen = false;
+        this.servicio.registrarProducto(this.producto).subscribe( respuesta => {
+          if(respuesta.est == 'success'){
+            setTimeout(() => {
+              this.spinnerService.hide();
+              this.servicio.toast('top',respuesta.message,'success');
+              this.myFormProducto.reset();
+              this.listarProductos();
+            }, 1000);
+          }else{
+            setTimeout(() => {
+              this.spinnerService.hide();
+              this.isModalOpen = true;
+              this.servicio.toast('top',respuesta.message,'error')
+            }, 1000);
+          }
+        })
+      }
     }else{
+      this.spinnerService.show();
+      this.isModalOpen = false;
       console.log("producto a editar", this.producto);
       this.servicio.editarProducto(this.producto.prod_id,this.producto).subscribe( respuesta => {
         console.log("respuesta", respuesta);
