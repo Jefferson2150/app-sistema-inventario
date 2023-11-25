@@ -1,11 +1,14 @@
 <ion-content [fullscreen]="true">
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "ball-scale-multiple" [fullScreen] = "true"
+  style="z-index: 999999 !important;"><p style="color: white" > Loading... </p>
+</ngx-spinner>
   <div>
     <ion-item style="width: 100%;display: flex; flex-direction: row;">
       <div style="width: 280px;">
         <h3>Proveedores</h3>
       </div>
       <div style="width: 300px;    margin: auto 0px;">
-        <ion-button style="width: 200px;height: 30px;    font-size: 11px !important;" class="background-principal">
+        <ion-button style="width: 200px;height: 30px;    font-size: 11px !important;" class="background-principal"  (click)="setOpen(true)" >
           <ion-icon name="add-outline"></ion-icon>
           <ion-label>Agregar Proveedores</ion-label>
         </ion-button>
@@ -30,51 +33,120 @@
     </ion-row>
   </ion-item>
 
-  <ion-item class="tamanio-letra-item">
+  <ion-item *ngFor="let lista_proveedor of pagedItems; let indice=index;" [hidden]="sin_resultado" class="tamanio-letra-item">
     <ion-row style="width: 100%" class="ion-align-items-center">
       <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">
         <div>
           <span>
-            PR-855447722
+            {{lista_proveedor.prov_id}}
          </span>
         </div>
       </ion-col>
       <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">
         <div>
           <span>
-            Soy prov abc
+            {{lista_proveedor.prov_nombre}}
          </span>
         </div>
       </ion-col>
       <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">
         <div>
           <span>
-            2075785212
+            {{lista_proveedor.prov_ruc}}
          </span>
         </div>
       </ion-col>
       <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">
         <div>
           <span>
-            70568587
+            {{lista_proveedor.prov_correo}}
          </span>
         </div>
       </ion-col>
       <ion-col size="3" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">
-        <ion-chip style="--background:#bb0303;--color:white;    width: 100px;">  
+        <ion-chip *ngIf="lista_proveedor.prov_estado == 1" style="--background:#bb0303;--color:white;    width: 100px;">  
           <ion-icon name="alert-outline" style="color: white;"></ion-icon>
-          <ion-label >estado</ion-label>
+          <ion-label >Inactivo</ion-label>
+        </ion-chip>
+        <ion-chip *ngIf="lista_proveedor.prov_estado == 0" style="--background:#205620;--color:white;    width: 100px;">  
+          <ion-icon name="checkmark-outline" style="color: white;"></ion-icon>
+          <ion-label>Activo</ion-label>
         </ion-chip>
       </ion-col>
       <ion-col style="justify-content: center;display: flex;" size="3" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">
-
-          
+        <ion-icon name="sync-outline" style="font-size: 17px;cursor: pointer;" (click)="editar(lista_proveedor)"></ion-icon>
+        <ion-icon name="trash-bin-outline" style="margin-left: 20px;font-size: 17px;cursor: pointer;" (click)="eliminar(lista_proveedor)"></ion-icon>
       </ion-col>
     </ion-row>
   </ion-item>
 
 </ion-list>
 
+
+<ion-modal [isOpen]="isModalOpen" backdropDismiss="false" [enterAnimation]="servicio.enterAnimation" [leaveAnimation]="servicio.leaveAnimation" class="modal-proveedor">
+  <ng-template>
+    <ion-content >
+      <div>
+        <ion-header>
+          <ion-toolbar class="background-principal" style="--color:white">
+            <ion-title>{{agregar}}</ion-title>
+            <ion-buttons slot="end" (click)="setOpen(false)">
+              <ion-icon name="close-outline" style="font-size: 30px;cursor: pointer;"></ion-icon>
+            </ion-buttons>  
+          </ion-toolbar>
+        </ion-header>
+      </div>
+      <div class="ion-padding">
+        
+        <form [formGroup]="myFormProveedor" #formDirective="ngForm"  class="formulario">
+          <ion-list>
+
+            <ion-item>
+              <ion-label> <strong>Nombre de proveedor *</strong></ion-label>
+              <ion-input formControlName="nombre" placeholder="Ingrese nombre " ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label> <strong>Celular *</strong></ion-label>
+              <ion-input  formControlName="telefono" placeholder="Ingrese celular" type="number" ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label> <strong>Ruc *</strong></ion-label>
+              <ion-input formControlName="ruc" placeholder="Ingrese ruc" type="number"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label> <strong>Email *</strong></ion-label>
+              <ion-input formControlName="correo" placeholder="Ingrese email" type="email"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label style="max-width: 80px;"> <strong>Estado </strong></ion-label>
+              <ion-toggle [checked]="marcar" (ionChange)="marcarEstado($event)"></ion-toggle>
+            </ion-item>
+           <!--  <ion-item >
+              <ion-select interface="action-sheet" value="{{editar_proveedor}}" placeholder="Seleccione categoría" cancel-text="Cancelar" (ionChange)="seleccionarCategoria($any($event.target).value)" >
+                <ion-select-option value="{{categorias.cat_id}}" *ngFor="let categorias of listaCategorias" >{{categorias.cat_nombre}}</ion-select-option>
+              </ion-select>
+            </ion-item> -->
+
+      <!--       <ion-item *ngIf="!agregarestado">
+              <ion-select interface="action-sheet" value="{{editar_categoria}}" placeholder="Seleccione categoría" cancel-text="Cancelar" (ionChange)="seleccionarCategoria($any($event.target).value)" >
+                <ion-select-option value="{{categorias.cat_id}}" *ngFor="let categorias of listaCategorias" >{{categorias.cat_nombre}}</ion-select-option>
+              </ion-select>
+            </ion-item> -->
+          </ion-list>
+
+        <div style="text-align: center;">
+          <ion-button style="width: 200px;height: 30px;font-size: 11px !important;align-items: center;" class="background-principal" (click)="registrar()"  >
+            <ion-label>{{botonAgregar}}</ion-label>
+          </ion-button>
+        </div>
+        </form>
+
+
+      </div>
+
+    </ion-content>
+  </ng-template>
+</ion-modal>
 
 
 

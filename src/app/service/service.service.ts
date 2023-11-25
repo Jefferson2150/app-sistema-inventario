@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Categoria } from '../estructura/clases/categoria';
 import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Producto } from '../estructura/clases/producto';
+import { Proveedor } from '../estructura/clases/proveedor';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +45,22 @@ export class ServiceService {
 
   eliminarProducto(id:number, producto:Producto){
     return this.http!.put<any>(this.Url+`/editar_eliminar_producto/`+id+`/deleted`,producto);
+  }
+
+  registrarProveedor(proveedor:Proveedor){
+    return this.http!.post<any>(this.Url+"/registrar_proveedor",proveedor);
+  }
+
+  listarProveedor(){
+    return this.http!.get<any>(this.Url+`/obtener_proveedor`);
+  }
+
+  editarProveedor(id:number, proveedor:Proveedor){
+    return this.http!.put<any>(this.Url+`/editar_eliminar_proveedores/`+id+`/edit`,proveedor);
+  }
+
+  eliminarProveedor(id:number, proveedor:Proveedor){
+    return this.http!.put<any>(this.Url+`/editar_eliminar_proveedores/`+id+`/deleted`,proveedor);
   }
 
 

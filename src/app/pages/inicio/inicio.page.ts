@@ -20,15 +20,15 @@ export class InicioPage implements OnInit {
     menu: 'Ventas',
     id:1,
     children: [
-      { menu: 'Ventas', id: 2, ruta: 'ventas'}
+      { menu: 'Ventas', id: 2, ruta: 'ventas'},
+      { menu: 'Lista de ventas', id: 3, ruta: 'lista-ventas'}
     ]
   },
   {
     menu: 'Cliente',
     id:1,
     children: [
-      { menu: 'Cliente', id: 1, ruta: 'categoria'},
-      { menu: 'Reporte', id: 2, ruta: 'categoria'}
+      { menu: 'Cliente', id: 1, ruta: 'cliente'},
     ]
   },
   {
@@ -51,6 +51,10 @@ export class InicioPage implements OnInit {
 
   cerrar(){
     this.menuCtrl.close();
+  }
+
+  inicio(){
+    this.router.navigate(["inicio/inicio-home"]);
   }
 
 }

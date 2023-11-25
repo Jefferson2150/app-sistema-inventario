@@ -7,6 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: VentaPage
+  },
+  {
+    path: 'lista-venta',
+    loadChildren: () => import('./lista-venta/lista-venta.module').then( m => m.ListaVentaPageModule)
+  },
+  {
+    path: 'cliente',
+    loadChildren: () => import('./cliente/cliente.module').then( m => m.ClientePageModule)
   }
 ];
 

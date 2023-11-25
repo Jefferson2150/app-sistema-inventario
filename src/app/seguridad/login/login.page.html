@@ -11,7 +11,7 @@
           <img src="../../../assets/img/logo.webp" alt="" class="img-datos">
         </ion-card-header>
         <ion-card-content>
-          <form [formGroup]="myFormLogin" #formDirective="ngForm"  class="formulario">
+          <form [formGroup]="myFormLogin" #formDirective="ngForm"  class="formulario" (ngSubmit)="ingresar()">
             <ion-list>
               <ion-item style="margin-bottom: 20px;" >
                 <ion-input label="Usuario" formControlName="usuario" labelPlacement="floating" placeholder="Ingrese usuario" class="tamanio-letra"></ion-input>
@@ -21,7 +21,8 @@
               </ion-item>
             </ion-list>
             <div>
-              <ion-button expand="block" class="background-principal" (click)="ingresar()">INGRESAR</ion-button>
+              <button type="submit" [hidden]="true"  class="btn btn-primary"></button>
+              <ion-button type="submit" expand="block" class="background-principal" (click)="ingresar()">INGRESAR</ion-button>
             </div>
           </form>
         </ion-card-content>
