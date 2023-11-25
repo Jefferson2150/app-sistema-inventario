@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { InicioHomePageRoutingModule } from './inicio-home-routing.module';
 
 import { InicioHomePage } from './inicio-home.page';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    InicioHomePageRoutingModule
+    InicioHomePageRoutingModule,
+    HighchartsChartModule
   ],
   declarations: [InicioHomePage]
 })

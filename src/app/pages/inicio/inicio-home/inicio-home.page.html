@@ -1,5 +1,6 @@
 <div>
   <div >
+    <h3 style="margin-left: 15px;margin-bottom: 0px;">PANEL DE CONTROL</h3>
     <ion-row style="width: 100%" class="ion-align-items-center">
       <ion-col size="3" size-lg="3" size-md="3" size-sm="3" >
         <ion-card class="card-item" style="background-color: #62ca62;" >
@@ -91,5 +92,50 @@
       </ion-col>
       
     </ion-row>
+  </div>
+  <div class="contenedor-home">
+    <div class="div-home1">
+      <ion-card>
+        <ion-card-content>
+          <ion-row style="width: 100%" class="ion-align-items-center">
+            <ion-col size="8" size-lg="8" size-md="8" size-sm="8" >
+              <h3 style="margin-left: 15px;margin-bottom: 0px;font-size: 16px;">Productos más vendidos</h3>
+              <div>
+                <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions">
+                </highcharts-chart>
+              </div>
+            </ion-col>
+            <ion-col size="4" size-lg="4" size-md="4" size-sm="4" >
+              <ion-list>
+                <ion-item>
+                  <ion-label style="font-size: 13px;">Mariscos</ion-label>
+                  <ion-badge color="primary">22k</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label style="font-size: 13px;">Filetes</ion-label>
+                  <ion-badge color="secondary">118k</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label style="font-size: 13px;">Pescado 1</ion-label>
+                  <ion-badge color="tertiary">34k</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label style="font-size: 13px;">Pescado 2</ion-label>
+                  <ion-badge color="success">80</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label style="font-size: 13px;">Pescado 3</ion-label>
+                  <ion-badge color="warning">70</ion-badge>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>          
+        </ion-card-content>
+      </ion-card>
+
+    </div>
+    <div>
+      
+    </div>
   </div>
 </div>  
