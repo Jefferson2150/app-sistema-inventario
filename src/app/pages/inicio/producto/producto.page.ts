@@ -90,6 +90,7 @@ export class ProductoPage implements OnInit {
   seleccionarCategoria(event:any){
     console.log("evento",event);
     this.producto.prod_cat_id = Number(event);
+    this.editar_categoria = Number(event);
   }
 
   registrar(){
@@ -99,7 +100,6 @@ export class ProductoPage implements OnInit {
     this.producto.prod_cantidad    = this.myFormProducto.value.cantidad;
     this.marcar ? this.producto.prod_estado = 0 : this.producto.prod_estado = 1;
     console.log("producto",this.producto);
-
     if(this.agregarestado){
       if(this.producto.prod_codigo == '' || this.producto.prod_nombre == ''){
         this.servicio.toast('top','Debe ingresar correctamente los datos obligatorios (*)','warning');
