@@ -3,6 +3,7 @@ import { AnimationController, ToastController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { Categoria } from '../estructura/clases/categoria';
 import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { Producto } from '../estructura/clases/producto';
 
 @Injectable({
   providedIn: 'root'
@@ -18,19 +19,34 @@ export class ServiceService {
   }
 
   listarCategoria(){
-    //return this.http.get<any>(this.Url+`/obtener_resultados?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`);
     return this.http!.get<any>(this.Url+`/obtener_categorias`);
   }
 
   editarCategoria(id:number, categoria:Categoria){
-    //return this.http.get<any>(this.Url+`/obtener_resultados?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`);
     return this.http!.put<any>(this.Url+`/editar_eliminar_categoria/`+id+`/edit`,categoria);
   }
 
   eliminarCategoria(id:number, categoria:Categoria){
-    //return this.http.get<any>(this.Url+`/obtener_resultados?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`);
     return this.http!.put<any>(this.Url+`/editar_eliminar_categoria/`+id+`/deleted`,categoria);
   }
+
+  registrarProducto(producto:Producto){
+    return this.http!.post<any>(this.Url+"/registrar_producto",producto);
+  }
+
+  listarProducto(){
+    return this.http!.get<any>(this.Url+`/obtener_productos`);
+  }
+
+  editarProducto(id:number, producto:Producto){
+    return this.http!.put<any>(this.Url+`/editar_eliminar_producto/`+id+`/edit`,producto);
+  }
+
+  eliminarProducto(id:number, producto:Producto){
+    return this.http!.put<any>(this.Url+`/editar_eliminar_producto/`+id+`/deleted`,producto);
+  }
+
+
 
   getPager(totalItems: number, currentPage: number = 1, pageSize: number = 3) {
     // calculate total pagess

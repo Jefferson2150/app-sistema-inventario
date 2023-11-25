@@ -1,5 +1,8 @@
 
 <ion-content [fullscreen]="true">
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "ball-scale-multiple" [fullScreen] = "true"
+    style="z-index: 999999 !important;"><p style="color: white" > Loading... </p>
+  </ngx-spinner>
   <div >
     <ion-item style="width: 100%;display: flex;
     flex-direction: row;">
@@ -14,7 +17,7 @@
       </div>
     </ion-item>
     <ion-item>
-      <ion-searchbar placeholder="Buscar producto" style="    --border-radius: 8px;"></ion-searchbar>
+      <ion-searchbar (ionInput)="busquedaGeneral()" [(ngModel)]="texto" placeholder="Buscar por nombre de producto" style="    --border-radius: 8px;"></ion-searchbar>
     </ion-item>
 
     <ion-list>
@@ -31,39 +34,44 @@
           <ion-col size="6" size-lg="8" size-md="8" size-sm="8" class="div-detalle-producto">
             <div>
               <span>
-               <strong>Producto:</strong> {{lista_productos.nombre}}
+               <strong>Producto:</strong> {{lista_productos.prod_nombre}}
              </span>
             </div>
             <div>
               <span>
-               <strong>Categoría:</strong> Gaseosa
+               <strong>Código:</strong> {{lista_productos.prod_codigo}}
+             </span>
+            </div>
+            <div *ngFor="let categoria of listaCategorias">
+              <span *ngIf="categoria.cat_id == lista_productos.prod_cat_id">
+               <strong>Categoría:</strong> {{categoria.cat_nombre}}
              </span>
             </div>
             <div>
               <span>
-               <strong>Precio:</strong> S/ 5.00
+               <strong>Precio:</strong> S/ {{lista_productos.prod_precio}}
              </span>
             </div>
             <div>
               <span>
-               <strong>Cantidad:</strong> 10
+               <strong>Cantidad:</strong> {{lista_productos.prod_cantidad}}
              </span>
             </div>
           </ion-col>
           <ion-col size="3" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">
             
-            <ion-chip *ngIf="lista_productos.estado_n == 1" style="--background:#bb0303;--color:white;    width: 100px;">  
+            <ion-chip *ngIf="lista_productos.prod_estado == 1" style="--background:#bb0303;--color:white;    width: 100px;">  
               <ion-icon name="alert-outline" style="color: white;"></ion-icon>
-              <ion-label >{{lista_productos.estado}}</ion-label>
+              <ion-label >Inactivo</ion-label>
             </ion-chip>
-            <ion-chip *ngIf="lista_productos.estado_n == 0" style="--background:#205620;--color:white;    width: 100px;">  
+            <ion-chip *ngIf="lista_productos.prod_estado == 0" style="--background:#205620;--color:white;    width: 100px;">  
               <ion-icon name="checkmark-outline" style="color: white;"></ion-icon>
-              <ion-label>{{lista_productos.estado}}</ion-label>
+              <ion-label>Activo</ion-label>
             </ion-chip>
           </ion-col>
           <ion-col style="justify-content: center;display: flex;" size="3" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">
-            <ion-icon name="sync-outline" style="font-size: 17px;cursor: pointer;"></ion-icon>
-              
+            <ion-icon name="sync-outline" style="font-size: 17px;cursor: pointer;" (click)="editar(lista_productos)"></ion-icon>
+            <ion-icon name="trash-bin-outline" style="margin-left: 20px;font-size: 17px;cursor: pointer;" (click)="eliminar(lista_productos)"></ion-icon>
           </ion-col>
         </ion-row>
       </ion-item>
@@ -75,19 +83,19 @@
           <nav>
             <ul *ngIf="pager.pages && pager.pages.length" class="pagination pagination-sm paginacion-posicion">
               <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
-                <ion-icon name="play-skip-back-outline" class="icono-paginacion page-link a-paginacion" (click)="setPage(1)"></ion-icon>
+                <ion-icon name="play-skip-back-outline" class="icono-paginacion page-link a-paginacion" (click)="setPage1(1)"></ion-icon>
               </li>
               <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
-                <ion-icon name="caret-back-outline" class="icono-paginacion page-link a-paginacion" (click)="setPage(pager.currentPage - 1)"></ion-icon>
+                <ion-icon name="caret-back-outline" class="icono-paginacion page-link a-paginacion" (click)="setPage1(pager.currentPage - 1)"></ion-icon>
               </li>
               <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
-                <span class="numero-paginacion page-link a-paginacion" (click)="setPage(page)">{{page}}</span>
+                <span class="numero-paginacion page-link a-paginacion" (click)="setPage1(page)">{{page}}</span>
               </li>
               <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                <ion-icon name="caret-forward-outline" class="icono-paginacion page-link a-paginacion" (click)="setPage(pager.currentPage + 1)" ></ion-icon>
+                <ion-icon name="caret-forward-outline" class="icono-paginacion page-link a-paginacion" (click)="setPage1(pager.currentPage + 1)" ></ion-icon>
               </li>
               <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                  <ion-icon name="play-skip-forward-outline" class="icono-paginacion page-link a-paginacion" (click)="setPage(pager.totalPages)"></ion-icon>
+                  <ion-icon name="play-skip-forward-outline" class="icono-paginacion page-link a-paginacion" (click)="setPage1(pager.totalPages)"></ion-icon>
               </li>
           </ul>
           </nav>
@@ -105,7 +113,7 @@
         <div>
           <ion-header>
             <ion-toolbar class="background-principal" style="--color:white">
-              <ion-title>Agregar productos</ion-title>
+              <ion-title>{{agregar}}</ion-title>
               <ion-buttons slot="end" (click)="setOpen(false)">
                 <ion-icon name="close-outline" style="font-size: 30px;cursor: pointer;"></ion-icon>
               </ion-buttons>  
@@ -114,37 +122,48 @@
         </div>
         <div class="ion-padding">
           
-
+          <form [formGroup]="myFormProducto" #formDirective="ngForm"  class="formulario">
             <ion-list>
               <ion-item>
-                <ion-label> <strong>Código</strong></ion-label>
-                <ion-input  placeholder="Ingrese código" ></ion-input>
+                <ion-label> <strong>Código *</strong></ion-label>
+                <ion-input formControlName="codigo" placeholder="Ingrese código" ></ion-input>
               </ion-item>
               <ion-item>
-                <ion-label> <strong>Nombre de producto</strong></ion-label>
-                <ion-input  placeholder="Ingrese nombre producto" ></ion-input>
+                <ion-label> <strong>Nombre de producto *</strong></ion-label>
+                <ion-input formControlName="producto" placeholder="Ingrese nombre producto" ></ion-input>
               </ion-item>
               <ion-item>
-                <ion-label> <strong>Precio S/.</strong></ion-label>
-                <ion-input  placeholder="0.0" ></ion-input>
+                <ion-label> <strong>Precio * S/.</strong></ion-label>
+                <ion-input  formControlName="precio" placeholder="0.0" type="number" ></ion-input>
               </ion-item>
               <ion-item>
-                <ion-label> <strong>Cantidad</strong></ion-label>
-                <ion-input  placeholder="123" ></ion-input>
+                <ion-label> <strong>Cantidad *</strong></ion-label>
+                <ion-input formControlName="cantidad" placeholder="123" type="number"></ion-input>
               </ion-item>
               <ion-item>
-                <ion-select interface="action-sheet" placeholder="Seleccione categoría" cancel-text="Cancelar">
-                  <ion-select-option value="apples">Gaseosa</ion-select-option>
-                  <ion-select-option value="oranges">Aceite</ion-select-option>
+                <ion-label style="max-width: 80px;"> <strong>Estado </strong></ion-label>
+                <ion-toggle [checked]="marcar" (ionChange)="marcarEstado($event)"></ion-toggle>
+              </ion-item>
+              <ion-item >
+                <ion-select interface="action-sheet" value="{{editar_categoria}}" placeholder="Seleccione categoría" cancel-text="Cancelar" (ionChange)="seleccionarCategoria($any($event.target).value)" >
+                  <ion-select-option value="{{categorias.cat_id}}" *ngFor="let categorias of listaCategorias" >{{categorias.cat_nombre}}</ion-select-option>
                 </ion-select>
               </ion-item>
+
+        <!--       <ion-item *ngIf="!agregarestado">
+                <ion-select interface="action-sheet" value="{{editar_categoria}}" placeholder="Seleccione categoría" cancel-text="Cancelar" (ionChange)="seleccionarCategoria($any($event.target).value)" >
+                  <ion-select-option value="{{categorias.cat_id}}" *ngFor="let categorias of listaCategorias" >{{categorias.cat_nombre}}</ion-select-option>
+                </ion-select>
+              </ion-item> -->
             </ion-list>
  
           <div style="text-align: center;">
-            <ion-button style="width: 200px;height: 30px;    font-size: 11px !important;align-items: center;" class="background-principal" (click)="setOpen(true)" >
-              <ion-label>REGISTRAR</ion-label>
+            <ion-button style="width: 200px;height: 30px;    font-size: 11px !important;align-items: center;" class="background-principal" (click)="registrar()" >
+              <ion-label>{{botonAgregar}}</ion-label>
             </ion-button>
           </div>
+          </form>
+
 
         </div>
 

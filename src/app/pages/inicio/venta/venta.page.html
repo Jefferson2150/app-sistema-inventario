@@ -1,61 +1,60 @@
-<ion-content [fullscreen]="true">
+
   <div >
-    <ion-item style="width: 100%;display: flex;
-    flex-direction: row;">
-      <div style="width: 280px;">
-        <h3>REGISTRAR VENTAS</h3>
+
+      <div style="width: 280px;margin-left: 15px;">
+        <h3 style="margin: 0px;">REGISTRAR VENTAS</h3>
       </div>
-    </ion-item>
+
 
     <div class="contenedor-venta">
       <div class="div-venta1">
         <ion-item>
-          <ion-searchbar placeholder="Buscar producto" style="    --border-radius: 8px;"></ion-searchbar>
+          <ion-searchbar placeholder="Buscar producto" style="--border-radius: 8px;left: -7px;"></ion-searchbar>
         </ion-item>
         <ion-list>
           <ion-item class="col-text div-item tamanio-letra-item">
             <ion-row style="width: 100%" class="ion-align-items-center">
-              <ion-col size="3" size-lg="3" size-md="3" size-sm="3" class="div-detalle-producto"><strong>CODIGO</strong></ion-col>
-              <ion-col size="3" size-lg="3" size-md="3" size-sm="3" class="div-detalle-producto"><strong>PRODUCTO</strong></ion-col>
-              <ion-col size="3" size-lg="3" size-md="3" size-sm="3" class="div-detalle-producto"><strong>VALOR UNITARIO</strong></ion-col>
+              <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>CODIGO</strong></ion-col>
+              <ion-col size="4" size-lg="4" size-md="4" size-sm="4" class="div-detalle-producto"><strong>PRODUCTO</strong></ion-col>
+              <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>VALOR UNITARIO</strong></ion-col>
               <ion-col size="3" size-lg="3" size-md="3" size-sm="3" class="div-detalle-producto"><strong>CANTIDAD</strong></ion-col>
             </ion-row>
           </ion-item>
 
           <ion-item *ngFor="let lista_productos of productos; let indice=index;" class="tamanio-letra-item">
             <ion-row style="width: 100%" class="ion-align-items-center">
-              <ion-col size="3" size-lg="3" size-md="3" size-sm="3" class="div-detalle-producto">
+              <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">
                 <div>
                   <span>
-                   {{lista_productos.codigo}}
+                   {{lista_productos.prod_codigo}}
                  </span>
                 </div>
               </ion-col>
-              <ion-col size="3" size-lg="3" size-md="3" size-sm="3" class="div-detalle-producto">
+              <ion-col size="4" size-lg="4" size-md="4" size-sm="4" class="div-detalle-producto">
                 <div>
                   <span>
-                    {{lista_productos.producto}}
+                    {{lista_productos.prod_nombre}}
                  </span>
                 </div>
               </ion-col>
-              <ion-col size="3" size-lg="3" size-md="3" size-sm="3" class="div-detalle-producto">
+              <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">
                 <div>
                   <span>
-                    {{lista_productos.precio}}
+                    {{lista_productos.prod_precio}}
                  </span>
                 </div>
               </ion-col>
               <ion-col size="3" size-lg="3" size-md="3" size-sm="3" class="div-detalle-producto">
                 <div style="flex-direction: row;display: flex">
                   <div>
-                    <ion-item fill="outline" style="width: 90px;">
-                      <ion-input placeholder="1"></ion-input>
+                    <ion-item fill="outline" style="width: 76px;
+                    --min-height: 37px;">
+                      <ion-input value="{{lista_productos.prod_cantidad_venta}}" (ionInput)="editarItem($any($event.target).value,lista_productos)"  style="min-height: 20px;"></ion-input>
                     </ion-item>
                   </div>
- 
                   <div style="margin: auto;">
-                    <ion-icon name="add-circle-outline" style="cursor: pointer;font-size: 35px;
-                    color: blue;"></ion-icon>
+                    <ion-icon name="add-circle-outline" style="cursor: pointer;font-size: 28px;
+                    color: rgb(4, 4, 128);" (click)="agregarItem(lista_productos)"></ion-icon>
                   </div>
                 </div>
               </ion-col>
@@ -64,74 +63,103 @@
         </ion-list>
       </div>
       <div class="div-venta2">
-        <div>
-          <h3 style="text-align: center;">DATOS VENTA</h3>
-        </div>
-        <div style="margin-bottom:20px;">
-          <ion-list>
-            <ion-item>
-              <ion-label> <strong>Dirección</strong></ion-label>
-              <ion-input  placeholder="Ingrese dirección " ></ion-input>
-            </ion-item>
-          </ion-list>
-        </div>
-        <div>
-          <ion-list>
-            <ion-item class="col-text div-item tamanio-letra-item">
-              <ion-row style="width: 100%" class="ion-align-items-center">
-                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto" ><strong>ITEM</strong></ion-col>
-                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto"><strong>CANT</strong></ion-col>
-                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto"><strong>UNIDAD</strong></ion-col>
-                <ion-col size="5" size-lg="5" size-md="5" size-sm="5" class="div-detalle-producto" style="text-align: center;"><strong>PRODUCTO</strong></ion-col>
-                <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto"><strong>V.U</strong></ion-col>
-                <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto" style="text-align: end;"><strong>SUBTOTAL</strong></ion-col>
-              </ion-row>
-            </ion-item>
-            <ion-item class="col-text div-item tamanio-letra-item">
-              <ion-row style="width: 100%" class="ion-align-items-center">
-                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto" >1</ion-col>
-                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto">2</ion-col>
-                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto">NIU</ion-col>
-                <ion-col size="5" size-lg="5" size-md="5" size-sm="5" class="div-detalle-producto" style="text-align: center;">Coca Cola</ion-col>
-                <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto"><strong>5.00</strong></ion-col>
-                <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto" style="text-align: end;"><strong>5.00</strong></ion-col>
-              </ion-row>
-            </ion-item>
-            <ion-item style="margin-top: 25px;">
-              <div style="display: flex;
-                flex-direction: row;
-                width: 100%;
-                height: 100%;">
-                <div style="width: 90%;">
-                  <div style="text-align: end;" >
-                    <ion-label style="padding-bottom: 5px;">SUBTOTAL: </ion-label>
-                    <ion-label style="padding-bottom: 5px;">IGV: </ion-label>
-                    <ion-label style="padding-bottom: 5px;"><strong>TOTAL: </strong></ion-label>
-                  </div> 
-                </div>
-                <div style="width: 10%;">
-                  <div style="text-align: end;" >
-                    <ion-label style="padding-bottom: 5px;">3.80</ion-label>
-                    <ion-label style="padding-bottom: 5px;">1.20 </ion-label>
-                    <ion-label style="padding-bottom: 5px;"><strong>5.00 </strong></ion-label>
-                  </div> 
-                </div>
-              </div>   
-            </ion-item>
-            <div style="margin-top: 20px;text-align: end;">
-              <ion-button style="width: 200px;height: 30px;    font-size: 11px !important;" class="background-principal" (click)="setOpen(true)" >
-                <ion-icon name="save-outline" style="margin-right: 10px;"></ion-icon>
-                <ion-label>REGISTRAR VENTA</ion-label>
-              </ion-button>
-              <ion-button style="width: 200px;height: 30px;font-size: 11px !important;" color="danger" (click)="setOpen(true)" >
-                <ion-icon name="save-outline" style="margin-right: 10px;"></ion-icon>
-                <ion-label>CANCELAR</ion-label>
-              </ion-button>
+        <ion-card>
+          <ion-card-content>
+            <div>
+              <h3 style="text-align: center;">DATOS VENTA</h3>
             </div>
-          </ion-list>
+            <div style="margin-bottom:20px;">
+              <ion-list>
+                <ion-row style="width: 100%;" >
+                  <ion-col size="5" [sizeLg]="6" [sizeMd]="6" >
+                    <ion-item>
+                      <ion-label> <strong>Usuario</strong></ion-label>
+                      <ion-input  placeholder="Usuiario "  value="Administrador" disabled="true"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="5" [sizeLg]="4" [sizeMd]="4" >
+                    <ion-item>
+                      <label for="" style="margin-right: 10px;">Fecha </label>
+                      <ion-input type="date" style="min-height: 49px;"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
 
-        </div>
+                <ion-item>
+                  <ion-label> <strong>Cliente</strong></ion-label>
+                  <ion-input  placeholder="Usuiario "  value="Jorge Enrique Paz"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label> <strong>Dirección</strong></ion-label>
+                  <ion-input  placeholder="Ingrese dirección " ></ion-input>
+                </ion-item>
+              </ion-list>
+            </div>
+            <div>
+              <ion-list>
+                <ion-item class="col-text div-item tamanio-letra-item">
+                  <ion-row style="width: 100%" class="ion-align-items-center">
+                    <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto" ><strong></strong></ion-col>
+                    <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto" ><strong>ITEM</strong></ion-col>
+                    <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto"><strong>CANT</strong></ion-col>
+                    <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto"><strong>UND</strong></ion-col>
+                    <ion-col size="4" size-lg="4" size-md="4" size-sm="4" class="div-detalle-producto" style="text-align: center;"><strong>PRODUCTO</strong></ion-col>
+                    <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto"><strong>V.U</strong></ion-col>
+                    <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto" style="text-align: end;"><strong>SUBTOTAL</strong></ion-col>
+                  </ion-row>
+                </ion-item>
+                <ion-item class="col-text div-item tamanio-letra-item" *ngFor="let venta of ventas">
+                  <ion-row style="width: 100%" class="ion-align-items-center" >
+                    <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto" >
+                      <ion-icon name="close-circle-outline" style="font-size: 23px;
+                      color: red;
+                      cursor: pointer;" (click)="eliminarItemVenta(venta)"></ion-icon>
+                    </ion-col>
+                    <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto" >{{venta.vent_id}}</ion-col>
+                    <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto">{{venta.vent_cantidad}}</ion-col>
+                    <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto">{{venta.vent_producto}}</ion-col>
+                    <ion-col size="4" size-lg="4" size-md="4" size-sm="4" class="div-detalle-producto" style="text-align: center;">{{venta.vent_unidad}}</ion-col>
+                    <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto"><strong>{{venta.vent_valor| number: '1.2-2'}}</strong></ion-col>
+                    <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto" style="text-align: end;"><strong>{{venta.vent_subtotal| number: '1.2-2'}}</strong></ion-col>
+                  </ion-row>
+                </ion-item>
+                <ion-item style="margin-top: 25px;">
+                  <div style="display: flex;
+                    flex-direction: row;
+                    width: 100%;
+                    height: 100%;">
+                    <div style="width: 90%;">
+                      <div style="text-align: end;" >
+                        <ion-label style="padding-bottom: 5px;">SUBTOTAL: </ion-label>
+                        <ion-label style="padding-bottom: 5px;">IGV: </ion-label>
+                        <ion-label style="padding-bottom: 5px;"><strong>TOTAL: </strong></ion-label>
+                      </div> 
+                    </div>
+                    <div style="width: 10%;">
+                      <div style="text-align: end;" >
+                        <ion-label style="padding-bottom: 5px;">{{subtotal | number: '1.2-2'}}</ion-label>
+                        <ion-label style="padding-bottom: 5px;">{{igv | number: '1.2-2'}} </ion-label>
+                        <ion-label style="padding-bottom: 5px;"><strong>{{total | number: '1.2-2'}}</strong></ion-label>
+                      </div> 
+                    </div>
+                  </div>   
+                </ion-item>
+                <div style="margin-top: 20px;text-align: end;">
+                  <ion-button style="width: 200px;height: 30px;    font-size: 11px !important;" class="background-principal" (click)="setOpen(true)" >
+                    <ion-icon name="save-outline" style="margin-right: 10px;"></ion-icon>
+                    <ion-label>REGISTRAR VENTA</ion-label>
+                  </ion-button>
+                  <ion-button style="width: 200px;height: 30px;font-size: 11px !important;" color="danger" (click)="setOpen(true)" >
+                    <ion-icon name="save-outline" style="margin-right: 10px;"></ion-icon>
+                    <ion-label>CANCELAR</ion-label>
+                  </ion-button>
+                </div>
+              </ion-list>
+    
+            </div>
+          </ion-card-content>
+        </ion-card>
+
       </div>
     </div>
   </div>
-</ion-content>

@@ -11,17 +11,19 @@
           <img src="../../../assets/img/logo.webp" alt="" class="img-datos">
         </ion-card-header>
         <ion-card-content>
-          <ion-list>
-            <ion-item style="margin-bottom: 20px;" >
-              <ion-input label="Usuario" labelPlacement="floating" placeholder="Ingrese usuario" class="tamanio-letra"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input label="Contraseña" type="password" labelPlacement="floating" placeholder="Ingrese contrseña" class="tamanio-letra"></ion-input>
-            </ion-item>
-          </ion-list>
-          <div>
-            <ion-button expand="block" class="background-principal" (click)="ingresar()">INGRESAR</ion-button>
-          </div>
+          <form [formGroup]="myFormLogin" #formDirective="ngForm"  class="formulario">
+            <ion-list>
+              <ion-item style="margin-bottom: 20px;" >
+                <ion-input label="Usuario" formControlName="usuario" labelPlacement="floating" placeholder="Ingrese usuario" class="tamanio-letra"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input label="Contraseña" formControlName="password" type="password" labelPlacement="floating" placeholder="Ingrese contrseña" class="tamanio-letra"></ion-input>
+              </ion-item>
+            </ion-list>
+            <div>
+              <ion-button expand="block" class="background-principal" (click)="ingresar()">INGRESAR</ion-button>
+            </div>
+          </form>
         </ion-card-content>
 
       </ion-card>

@@ -27,10 +27,18 @@ const routes: Routes = [
       {
         path: 'proveedores',
         loadChildren: () => import('./compras/proveedores/proveedores.module').then( m => m.ProveedoresPageModule)
-      }
+      },
+      {
+        path: 'inicio-home',
+        loadChildren: () => import('./inicio-home/inicio-home.module').then( m => m.InicioHomePageModule)
+      },
       
     ]
-  }/* ,
+  },
+
+
+
+  /*
   {
     path: 'producto',
     loadChildren: () => import('./producto/producto.module').then( m => m.ProductoPageModule)

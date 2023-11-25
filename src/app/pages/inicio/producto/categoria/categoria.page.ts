@@ -130,18 +130,18 @@ export class CategoriaPage implements OnInit {
 
   async eliminar(cate:Categoria) {
     const alert = await this.alertController.create({
-      header: 'Eliminar la categoría ' + cate.cat_nombre + "!",
+      header: 'Eliminar la categoría : ' + cate.cat_nombre + "!",
       mode: 'ios',
       buttons: [
         {
-          text: 'No',
+          text: 'NO',
           role: 'cancel',
           handler: () => {
             this.handlerMessage = 'Alert canceled';
           },
         },
         {
-          text: 'Si',
+          text: 'SI',
           role: 'confirm',
           handler: () => {
             this.spinnerService.show();
