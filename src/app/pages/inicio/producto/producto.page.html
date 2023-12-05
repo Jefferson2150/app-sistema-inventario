@@ -137,17 +137,32 @@
                 <ion-input  formControlName="precio" placeholder="0.0" type="number" ></ion-input>
               </ion-item>
               <ion-item>
-                <ion-label> <strong>Cantidad *</strong></ion-label>
+                <ion-label> <strong>Cantidad (kg)*</strong></ion-label>
                 <ion-input formControlName="cantidad" placeholder="123" type="number"></ion-input>
               </ion-item>
+
               <ion-item>
-                <ion-label style="max-width: 80px;"> <strong>Estado </strong></ion-label>
-                <ion-toggle [checked]="marcar" (ionChange)="marcarEstado($event)"></ion-toggle>
+                <ion-label> <strong>Rotulación *</strong></ion-label>
+                <ion-input formControlName="rotulacion" placeholder="Ingrese rotulación" ></ion-input>
               </ion-item>
               <ion-item >
                 <ion-select interface="action-sheet" value="{{editar_categoria}}" placeholder="Seleccione categoría" cancel-text="Cancelar" (ionChange)="seleccionarCategoria($any($event.target).value)" >
                   <ion-select-option value="{{categorias.cat_id}}" *ngFor="let categorias of listaCategorias" >{{categorias.cat_nombre}}</ion-select-option>
                 </ion-select>
+              </ion-item>
+              <ion-item >
+                <ion-select interface="action-sheet" value="{{editar_lamina}}" placeholder="Seleccione lamina" cancel-text="Cancelar" (ionChange)="seleccionarLamina($any($event.target).value)" >
+                  <ion-select-option value="{{laminas.para_correlativo}}" *ngFor="let laminas of parametro" >{{laminas.para_cadena1}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item >
+                <ion-select interface="action-sheet" value="{{editar_rafia}}" placeholder="Seleccione rafia" cancel-text="Cancelar" (ionChange)="seleccionarRafia($any($event.target).value)" >
+                  <ion-select-option value="{{rafias.para_correlativo}}" *ngFor="let rafias of parametro" >{{rafias.para_cadena1}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item>
+                <ion-label style="max-width: 80px;"> <strong>Estado </strong></ion-label>
+                <ion-toggle [checked]="marcar" (ionChange)="marcarEstado($event)"></ion-toggle>
               </ion-item>
 
         <!--       <ion-item *ngIf="!agregarestado">

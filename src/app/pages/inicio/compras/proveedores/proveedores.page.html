@@ -1,6 +1,6 @@
 <ion-content [fullscreen]="true">
   <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "ball-scale-multiple" [fullScreen] = "true"
-  style="z-index: 999999 !important;"><p style="color: white" > Loading... </p>
+  style="z-index: 999999 !important;"><p style="color: white" > Cargando... </p>
 </ngx-spinner>
   <div>
     <ion-item style="width: 100%;display: flex; flex-direction: row;">
@@ -115,23 +115,12 @@
             </ion-item>
             <ion-item>
               <ion-label> <strong>Email *</strong></ion-label>
-              <ion-input formControlName="correo" placeholder="Ingrese email" type="email"></ion-input>
+              <ion-input formControlName="correo" placeholder="Ingrese email" type="email" ></ion-input>
             </ion-item>
             <ion-item>
               <ion-label style="max-width: 80px;"> <strong>Estado </strong></ion-label>
               <ion-toggle [checked]="marcar" (ionChange)="marcarEstado($event)"></ion-toggle>
             </ion-item>
-           <!--  <ion-item >
-              <ion-select interface="action-sheet" value="{{editar_proveedor}}" placeholder="Seleccione categoría" cancel-text="Cancelar" (ionChange)="seleccionarCategoria($any($event.target).value)" >
-                <ion-select-option value="{{categorias.cat_id}}" *ngFor="let categorias of listaCategorias" >{{categorias.cat_nombre}}</ion-select-option>
-              </ion-select>
-            </ion-item> -->
-
-      <!--       <ion-item *ngIf="!agregarestado">
-              <ion-select interface="action-sheet" value="{{editar_categoria}}" placeholder="Seleccione categoría" cancel-text="Cancelar" (ionChange)="seleccionarCategoria($any($event.target).value)" >
-                <ion-select-option value="{{categorias.cat_id}}" *ngFor="let categorias of listaCategorias" >{{categorias.cat_nombre}}</ion-select-option>
-              </ion-select>
-            </ion-item> -->
           </ion-list>
 
         <div style="text-align: center;">

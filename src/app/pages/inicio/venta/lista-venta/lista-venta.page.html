@@ -1,13 +1,45 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>lista-venta</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">lista-venta</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "ball-scale-multiple" [fullScreen] = "true"
+  style="z-index: 999999 !important;"><p style="color: white" > Cargando... </p>
+</ngx-spinner>
+  <div >
+    <ion-item style="width: 100%;display: flex;
+    flex-direction: row;">
+      <div style="width: 280px;">
+        <h3>Lista de ventas</h3>
+      </div>
+<!--       <div style="width: 300px;    margin: auto 0px;">
+        <ion-button style="width: 200px;height: 30px;    font-size: 11px !important;" class="background-principal" >
+          <ion-icon name="add-outline"></ion-icon>
+          <ion-label>Agregar cliente</ion-label>
+        </ion-button>
+      </div> -->
+    </ion-item>
+  </div>
+  <div>
+    <ion-list>
+      <ion-item class="col-text div-item tamanio-letra-item">
+        <ion-row style="width: 100%" class="ion-align-items-center">
+          <ion-col size="6" size-lg="3" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Codigo</strong></ion-col>
+          <ion-col size="6" size-lg="3" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Cliente</strong></ion-col>
+          <ion-col size="3" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Fecha</strong></ion-col>
+          <ion-col size="3" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Venta total( S/.)</strong></ion-col>
+          <ion-col style="text-align: center;" size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Acciones</strong></ion-col>
+        </ion-row>
+      </ion-item>
+
+      <ion-item  *ngFor="let lista_venta of ventas; let indice=index;" class="tamanio-letra-item">
+        <ion-row style="width: 100%" class="ion-align-items-center">
+          <ion-col size="6" size-lg="3" size-md="2" size-sm="2" class="div-detalle-producto">{{ lista_venta.vent_id}}</ion-col>
+          <ion-col size="6" size-lg="3" size-md="2" size-sm="2" class="div-detalle-producto">Cliente</ion-col>
+          <ion-col size="3" size-lg="2" size-md="2" size-sm="2" >{{ lista_venta.vent_fecha}}</ion-col>
+          <ion-col size="3" size-lg="2" size-md="2" size-sm="2" >{{ lista_venta.vent_total}}</ion-col>
+          <ion-col size="3" size-lg="2" size-md="2" size-sm="2" style="text-align: center;">
+            <ion-icon name="open-outline" style="font-size: 20px;cursor: pointer;color: #00bd00;" ></ion-icon>
+          </ion-col>
+          
+        </ion-row>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>

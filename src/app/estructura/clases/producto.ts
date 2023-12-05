@@ -7,4 +7,7 @@ export class Producto {
     prod_cat_id     : number = 3;
     prod_estado     : number = 0;
     prod_cantidad_venta : number = 0;
+    prod_rotulacion : string = '';
+    prod_rafia      : number = 0;
+    prod_lamina     : number = 0;
 }

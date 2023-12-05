@@ -132,8 +132,6 @@ export class ProveedoresPage  implements OnInit {
     prov.prov_estado == 0 ? this.marcar = true : this.marcar = false;
     //this.editar_proveedor = Number(prod.prod_cat_id);
     this.agregarestado = false;
-
-
   }
 
   async eliminar(prov:Proveedor) {

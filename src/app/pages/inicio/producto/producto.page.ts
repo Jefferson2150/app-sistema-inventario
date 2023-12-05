@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, AnimationController } from '@ionic/angular';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Categoria } from 'src/app/estructura/clases/categoria';
+import { Parametro } from 'src/app/estructura/clases/parametro';
 import { Producto } from 'src/app/estructura/clases/producto';
 import { ServiceService } from 'src/app/service/service.service';
 
@@ -25,12 +26,15 @@ export class ProductoPage implements OnInit {
   producto: Producto = new Producto();
   productos: Producto[] = [];
   listaCategorias : Categoria[] = [];
+  parametro       : Parametro[] = [];
   filtro :any[] = [];
   marcar = true;
   agregar = 'Agregar producto';
   botonAgregar = 'REGISTRAR';
   agregarestado = true;
-  editar_categoria = 0;
+  editar_categoria  = 0;
+  editar_lamina     = 0;
+  editar_rafia      = 0;
   texto = "";
   constructor(public servicio:ServiceService,private animationCtrl: AnimationController,public formBuilder: FormBuilder,private spinnerService: NgxSpinnerService,
     private alertController: AlertController) { }
@@ -41,15 +45,29 @@ export class ProductoPage implements OnInit {
     this.listarCategoria();
     this.listarProductos();
     this.con_resultado = false;
+    this.listarLaminas();
+    this.listarRafias();
   }
 
   cargarFormulario(){
     this.myFormProducto = this.formBuilder.group({
       codigo       : [{value: '', disabled: false}, [Validators.required]],
-      producto       : ['', [Validators.required]],
+      producto     : ['', [Validators.required]],
       precio       : ['', [Validators.required]],
-      cantidad       : ['', [Validators.required]],
+      cantidad     : ['', [Validators.required]],
+      rotulacion   : ['', [Validators.required]],
     });
+  }
+
+  listarLaminas(){
+    this.servicio.listarParametro(1).subscribe( respuesta => {
+      this.parametro = respuesta;
+      console.log("parametros", this.parametro);
+    })
+  }
+
+  listarRafias(){
+    
   }
 
   setOpen(isOpen: boolean) {
@@ -58,7 +76,9 @@ export class ProductoPage implements OnInit {
     this.botonAgregar = 'REGISTRAR';
     this.marcar = true;
     this.agregarestado = true;
-    this.editar_categoria = 0;
+    this.editar_categoria   = 0;
+    this.editar_lamina      = 0;
+    this.editar_rafia       = 0;
     this.myFormProducto.controls["codigo"].enable();
   }
 
@@ -91,6 +111,18 @@ export class ProductoPage implements OnInit {
     console.log("evento",event);
     this.producto.prod_cat_id = Number(event);
     this.editar_categoria = Number(event);
+  }
+
+  seleccionarLamina(event:any){
+    console.log("evento",event);
+    this.producto.prod_lamina = Number(event);
+    this.editar_lamina = Number(event);
+  }
+
+  seleccionarRafia(event:any){
+    console.log("evento",event);
+    this.producto.prod_rafia = Number(event);
+    this.editar_rafia = Number(event);
   }
 
   registrar(){

@@ -1,8 +1,8 @@
 <div>
   <div >
-    <h3 style="margin-left: 15px;margin-bottom: 0px;">PANEL DE CONTROL</h3>
+    <h3 style="margin-left: 15px;margin-bottom: 0px;margin-top: 0px;">PANEL DE CONTROL</h3>
     <ion-row style="width: 100%" class="ion-align-items-center">
-      <ion-col size="3" size-lg="3" size-md="3" size-sm="3" >
+      <ion-col size="12" size-lg="3" size-md="3" size-sm="3" >
         <ion-card class="card-item" style="background-color: #62ca62;" >
           <ion-card-content>
             <div class="div-card-item">
@@ -24,7 +24,7 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col size="3" size-lg="3" size-md="3" size-sm="3" >
+      <ion-col size="12" size-lg="3" size-md="3" size-sm="3" >
         <ion-card class="card-item" style="background-color: #d43b3b;" >
           <ion-card-content>
             <div class="div-card-item">
@@ -46,7 +46,7 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col size="3" size-lg="3" size-md="3" size-sm="3" >
+      <ion-col size="12" size-lg="3" size-md="3" size-sm="3" >
         <ion-card class="card-item" style="background-color: #1f9ff5;" >
           <ion-card-content>
             <div class="div-card-item">
@@ -68,7 +68,7 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col size="3" size-lg="3" size-md="3" size-sm="3" >
+      <ion-col size="12" size-lg="3" size-md="3" size-sm="3" >
         <ion-card class="card-item" style="background-color: #d99403f5;" >
           <ion-card-content>
             <div class="div-card-item">
@@ -134,8 +134,66 @@
       </ion-card>
 
     </div>
-    <div>
-      
+
+    <div class="div-home2">
+      <ion-card>
+        <ion-card-content>
+          <ion-row style="width: 100%" class="ion-align-items-center">
+            <ion-col size="8" size-lg="8" size-md="8" size-sm="8" >
+              <h3 style="margin-left: 15px;margin-bottom: 0px;font-size: 16px;">Clasificación resumen</h3>
+              <div>
+                <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptionsABC">
+                </highcharts-chart>
+              </div>
+            </ion-col>
+            <ion-col size="4" size-lg="4" size-md="4" size-sm="4" >
+              <ion-list>
+                <h4>Productos clasificación C</h4>
+                <ion-item>
+                  <ion-label style="font-size: 13px;">Mariscos</ion-label>
+                  <ion-badge color="primary">22k</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label style="font-size: 13px;">Filetes</ion-label>
+                  <ion-badge color="secondary">118k</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label style="font-size: 13px;">Pescado 1</ion-label>
+                  <ion-badge color="tertiary">34k</ion-badge>
+                </ion-item>
+                <!-- <ion-item>
+                  <ion-label style="font-size: 13px;">Pescado 2</ion-label>
+                  <ion-badge color="success">80</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label style="font-size: 13px;">Pescado 3</ion-label>
+                  <ion-badge color="warning">70</ion-badge>
+                </ion-item> -->
+              </ion-list>
+            </ion-col>
+          </ion-row>          
+        </ion-card-content>
+      </ion-card>
     </div>
+
+
+  </div>
+  <div>
+    <ion-card>
+      <ion-card-content>
+        <ion-list>
+          <ion-item class="col-text div-item tamanio-letra-item">
+            <ion-row style="width: 100%" class="ion-align-items-center">
+              <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Item</strong></ion-col>
+              <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Valor del artículo</strong></ion-col>
+              <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Unidades consumidas</strong></ion-col>
+              <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Consumo anual(S/)</strong></ion-col>
+              <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>% del total anual</strong></ion-col>
+              <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>% acumulado del total anual</strong></ion-col>
+            </ion-row>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
   </div>
 </div>  

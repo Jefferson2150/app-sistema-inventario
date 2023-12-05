@@ -5,6 +5,8 @@ import { Categoria } from '../estructura/clases/categoria';
 import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Producto } from '../estructura/clases/producto';
 import { Proveedor } from '../estructura/clases/proveedor';
+import { Venta } from '../estructura/clases/venta';
+import { Cliente } from '../estructura/clases/cliente';
 
 @Injectable({
   providedIn: 'root'
@@ -61,6 +63,35 @@ export class ServiceService {
 
   eliminarProveedor(id:number, proveedor:Proveedor){
     return this.http!.put<any>(this.Url+`/editar_eliminar_proveedores/`+id+`/deleted`,proveedor);
+  }
+
+  listarParametro(prefijo:number){
+    return this.http!.get<any>(this.Url+`/parametroadmin/`+prefijo);
+  }
+
+  registrarVenta(venta:Venta){
+    return this.http!.post<any>(this.Url+"/registar_venta",venta);
+  }
+
+  registrarCliente(cliente:Cliente){
+    return this.http!.post<any>(this.Url+"/registrar_clientes",cliente);
+  }
+
+  listarCliente(){
+    return this.http!.get<any>(this.Url+`/obtener_clientes`);
+  }
+
+
+  editarCliente(id:number, cliente:Cliente){
+    return this.http!.put<any>(this.Url+`/editar_eliminar_clientes/`+id+`/edit`,cliente);
+  }
+
+  eliminarCliente(id:number, cliente:Cliente){
+    return this.http!.put<any>(this.Url+`/editar_eliminar_clientes/`+id+`/deleted`,cliente);
+  }
+
+  listarVentas(){
+    return this.http!.get<any>(this.Url+`/obtener_ventas`);
   }
 
 

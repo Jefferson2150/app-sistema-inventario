@@ -1,5 +1,7 @@
 <ion-content [fullscreen]="true">
-
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "ball-scale-multiple" [fullScreen] = "true"
+  style="z-index: 999999 !important;"><p style="color: white" > Cargando... </p>
+</ngx-spinner>
   <div >
     <ion-item style="width: 100%;display: flex;
     flex-direction: row;">
@@ -7,10 +9,120 @@
         <h3>Registrar Clientes</h3>
       </div>
       <div style="width: 300px;    margin: auto 0px;">
-        <ion-button style="width: 200px;height: 30px;    font-size: 11px !important;" class="background-principal"  >
+        <ion-button style="width: 200px;height: 30px;    font-size: 11px !important;" class="background-principal"  (click)="setOpen(true)" >
           <ion-icon name="add-outline"></ion-icon>
           <ion-label>Agregar cliente</ion-label>
         </ion-button>
       </div>
     </ion-item>
+    <ion-item>
+      <ion-searchbar placeholder="Buscar cliente" style="--border-radius: 8px;"></ion-searchbar>
+    </ion-item>
+
+    <ion-list>
+      <ion-item class="col-text div-item tamanio-letra-item">
+        <ion-row style="width: 100%" class="ion-align-items-center">
+          <ion-col size="6" size-lg="6" size-md="6" size-sm="6" class="div-detalle-producto"><strong>Nombre</strong></ion-col>
+          <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Documento</strong></ion-col>
+          <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Estado</strong></ion-col>
+          <ion-col style="text-align: center;" size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Acciones</strong></ion-col>
+        </ion-row>
+      </ion-item>
+
+      <ion-item *ngFor="let lista_cliente of clientes; let indice=index;" class="tamanio-letra-item">
+        <ion-row style="width: 100%" class="ion-align-items-center">
+          <ion-col size="6" size-lg="6" size-md="6" size-sm="6" class="div-detalle-producto">
+            <div>
+              <span>
+                {{lista_cliente.cl_nombre}}
+             </span>
+            </div>
+          </ion-col>
+          <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">
+            <div>
+              <span>
+                {{lista_cliente.cl_doc}}
+             </span>
+            </div>
+          </ion-col>
+          <ion-col size="3" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">
+            <ion-chip *ngIf="lista_cliente.cl_estado == 1" style="--background:#bb0303;--color:white;    width: 100px;">  
+              <ion-icon name="alert-outline" style="color: white;"></ion-icon>
+              <ion-label >Inactivo</ion-label>
+            </ion-chip>
+            <ion-chip *ngIf="lista_cliente.cl_estado == 0" style="--background:#205620;--color:white;    width: 100px;">  
+              <ion-icon name="checkmark-outline" style="color: white;"></ion-icon>
+              <ion-label>Activo</ion-label>
+            </ion-chip>
+          </ion-col>
+          <ion-col style="justify-content: center;display: flex;" size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">
+            <ion-icon name="sync-outline" style="font-size: 17px;cursor: pointer;" (click)="editar(lista_cliente)"></ion-icon>
+            <ion-icon name="trash-bin-outline" style="margin-left: 20px;font-size: 17px;cursor: pointer;" (click)="eliminar(lista_cliente)"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </ion-list>
+
+    <ion-modal [isOpen]="isModalOpen" backdropDismiss="false" [enterAnimation]="servicio.enterAnimation" [leaveAnimation]="servicio.leaveAnimation" class="modal-proveedor">
+      <ng-template>
+        <ion-content >
+          <div>
+            <ion-header>
+              <ion-toolbar class="background-principal" style="--color:white">
+                <ion-title>{{agregar}}</ion-title>
+                <ion-buttons slot="end" (click)="setOpen(false)">
+                  <ion-icon name="close-outline" style="font-size: 30px;cursor: pointer;"></ion-icon>
+                </ion-buttons>  
+              </ion-toolbar>
+            </ion-header>
+          </div>
+          <div class="ion-padding">
+            
+            <form [formGroup]="myFormCliente" #formDirective="ngForm"  class="formulario">
+              <ion-list>
+    
+                <ion-item>
+                  <ion-label> <strong>Nombre de cliente *</strong></ion-label>
+                  <ion-input formControlName="nombre" placeholder="Ingrese nombre " ></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label> <strong>Celular *</strong></ion-label>
+                  <ion-input  formControlName="telefono" placeholder="Ingrese celular" type="number" ></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label> <strong>DNI *</strong></ion-label>
+                  <ion-input formControlName="doc" placeholder="Ingrese DNI" type="number"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label> <strong>Email *</strong></ion-label>
+                  <ion-input formControlName="email" placeholder="Ingrese email" type="email" ></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label> <strong>Dirección *</strong></ion-label>
+                  <ion-input formControlName="direccion" placeholder="Ingrese dirección" type="email" ></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label> <strong>F. Nacimiento *</strong></ion-label>
+                  <ion-input formControlName="fnacimiento" placeholder="Ingrese email" type="date" ></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label style="max-width: 80px;"> <strong>Estado </strong></ion-label>
+                  <ion-toggle [checked]="marcar" (ionChange)="marcarEstado($event)"></ion-toggle>
+                </ion-item>
+              </ion-list>
+    
+            <div style="text-align: center;">
+              <ion-button style="width: 200px;height: 30px;font-size: 11px !important;align-items: center;" class="background-principal" (click)="registrar()"  >
+                <ion-label>{{botonAgregar}}</ion-label>
+              </ion-button>
+            </div>
+            </form>
+    
+    
+          </div>
+    
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
   </div>
