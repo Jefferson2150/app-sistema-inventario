@@ -8,6 +8,10 @@ const routes: Routes = [
     path: '',
     component: ComprasPage
   },
+  {
+    path: 'lista-compras',
+    loadChildren: () => import('./lista-compras/lista-compras.module').then( m => m.ListaComprasPageModule)
+  },
 ];
 
 @NgModule({

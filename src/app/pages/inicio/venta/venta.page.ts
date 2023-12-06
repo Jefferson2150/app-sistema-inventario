@@ -70,7 +70,7 @@ export class VentaPage implements OnInit {
   cargarFormulario (){
     this.myFormVenta = this.formBuilder.group({
       usuario       : [{value: 'Administrador', disabled: true}, [Validators.required]],
-      cliente       : ['', [Validators.required]],
+      cliente       : ['',],
       fechaVenta    : [this.fechaHoy, [Validators.required]],
       direccion     : ['', ],
     });
@@ -110,7 +110,7 @@ export class VentaPage implements OnInit {
         vent_id           : 1,
         vent_item         : 1,
         vent_cantidad   : prod.prod_cantidad_venta,
-        vent_unidad     : 'UNI',
+        vent_unidad     : 'KG',
         vent_producto   : prod.prod_nombre,
         vent_valor      : prod.prod_precio,
         vent_subtotal   : (prod.prod_precio * prod.prod_cantidad_venta),
@@ -166,6 +166,7 @@ export class VentaPage implements OnInit {
           setTimeout(() => {
             this.spinnerService.hide();
             this.servicio.toast('top',respuesta.message,'success');
+            this.cancelarVenta();
           }, 1000);
         }else{
           setTimeout(() => {

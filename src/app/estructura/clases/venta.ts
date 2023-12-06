@@ -18,5 +18,10 @@ export class Venta {
     venta_detalle   : VentaDetalle[] = [];
     vent_total      : number = 0;
     vent_igv        : number = 0;
-    vent_subtotal   : number = 0;  
+    vent_subtotal   : number = 0;
+    cliente         : string = '';
+    detalles        : VentaDetalle[] = [];
+    id_cliente      : number = 0;
+    nombre_usuario  : string = '';
+    us_username     : string = '';
 }

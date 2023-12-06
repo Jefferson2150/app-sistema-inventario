@@ -10,7 +10,8 @@
 
 
     <div class="contenedor-venta">
-      <div class="div-venta1">
+      <div class="div-venta1" style="    height: 750px;
+      overflow: scroll;">
         <ion-item>
           <ion-searchbar (ionInput)="busquedaGeneral()" [(ngModel)]="texto" placeholder="Buscar producto" style="--border-radius: 8px;left: -7px;"></ion-searchbar>
         </ion-item>
@@ -112,7 +113,7 @@
                       <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto" ><strong></strong></ion-col>
                       <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto" ><strong>ITEM</strong></ion-col>
                       <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto"><strong>CANT</strong></ion-col>
-                      <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto"><strong>UND</strong></ion-col>
+                      <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto"><strong>KG</strong></ion-col>
                       <ion-col size="4" size-lg="4" size-md="4" size-sm="4" class="div-detalle-producto" style="text-align: center;"><strong>PRODUCTO</strong></ion-col>
                       <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto"><strong>V.U</strong></ion-col>
                       <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto" style="text-align: end;"><strong>SUBTOTAL</strong></ion-col>
@@ -127,8 +128,8 @@
                       </ion-col>
                       <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto" >{{venta.vent_item}}</ion-col>
                       <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto">{{venta.vent_cantidad}}</ion-col>
-                      <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto">{{venta.vent_producto}}</ion-col>
-                      <ion-col size="4" size-lg="4" size-md="4" size-sm="4" class="div-detalle-producto" style="text-align: center;">{{venta.vent_unidad}}</ion-col>
+                      <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto">{{venta.vent_unidad}}</ion-col>
+                      <ion-col size="4" size-lg="4" size-md="4" size-sm="4" class="div-detalle-producto" style="text-align: center;">{{venta.vent_producto}}</ion-col>
                       <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto"><strong>{{venta.vent_valor| number: '1.2-2'}}</strong></ion-col>
                       <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto" style="text-align: end;"><strong>{{venta.vent_subtotal| number: '1.2-2'}}</strong></ion-col>
                     </ion-row>

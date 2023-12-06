@@ -1,0 +1,96 @@
+<div>
+  <ion-item style="width: 100%;display: flex;
+  flex-direction: row;">
+    <div style="width: 100%;">
+      <h3 style="text-align: center;">DETALLE DE VENTA</h3>
+    </div>
+  </ion-item>
+  <div>
+    <ion-card>
+      <ion-card-content>
+        <div>
+          <ion-list>
+            <ion-row style="width: 100%;" >
+              <ion-col size="6" [sizeLg]="6" [sizeMd]="6" >
+                <ion-item>
+                  <ion-label> <strong>Usuario</strong></ion-label>
+                  <ion-input [(ngModel)]="venta.us_username" placeholder="Usuario" value="Administrador" ></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="6" [sizeLg]="4" [sizeMd]="4" >
+                <ion-item>
+                  <ion-label for="" style="margin-right: 10px;">Fecha </ion-label>
+                  <ion-input [(ngModel)]="venta.vent_fecha" type="date" style="min-height: 49px;"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="6" [sizeLg]="6" [sizeMd]="6" >
+                <ion-item>
+                  <ion-label> <strong>Cliente</strong></ion-label>
+                  <ion-input [(ngModel)]="venta.cliente" placeholder="Ingrese cliente "  value="Jorge Enrique Paz"></ion-input>
+                  <ion-icon style="cursor: pointer;" name="search-outline" slot="end" ></ion-icon>
+                </ion-item>
+              </ion-col>
+              <ion-col size="6" [sizeLg]="6" [sizeMd]="6" >
+                <ion-item>
+                  <ion-label> <strong>Dirección</strong></ion-label>
+                  <ion-input [(ngModel)]="venta.vent_direccion" placeholder="Ingrese dirección " ></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-list>
+
+          <ion-list>
+            <ion-item class="col-text div-item tamanio-letra-item">
+              <ion-row style="width: 100%" class="ion-align-items-center">
+                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto" ><strong>ITEM</strong></ion-col>
+                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto"><strong>CANT</strong></ion-col>
+                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto"><strong>PRODUCTO</strong></ion-col>
+                <ion-col size="4" size-lg="4" size-md="4" size-sm="4" class="div-detalle-producto" style="text-align: center;"><strong>UND</strong></ion-col>
+                <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto"><strong>V.U</strong></ion-col>
+                <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto" style="text-align: end;"><strong>SUBTOTAL</strong></ion-col>
+              </ion-row>
+            </ion-item>
+            <ion-item class="col-text div-item tamanio-letra-item" *ngFor="let venta of venta.detalles">
+              <ion-row style="width: 100%" class="ion-align-items-center" >
+                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto" >{{venta.vent_item}}</ion-col>
+                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto">{{venta.vent_cantidad}}</ion-col>
+                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto">{{venta.vent_producto}}</ion-col>
+                <ion-col size="4" size-lg="4" size-md="4" size-sm="4" class="div-detalle-producto" style="text-align: center;">{{venta.vent_unidad}}</ion-col>
+                <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto"><strong>{{venta.vent_valor| number: '1.2-2'}}</strong></ion-col>
+                <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto" style="text-align: end;"><strong>{{venta.vent_subtotal| number: '1.2-2'}}</strong></ion-col>
+              </ion-row>
+            </ion-item>
+            <ion-item style="margin-top: 25px;">
+              <div style="display: flex;
+                flex-direction: row;
+                width: 182%;
+                height: 100%;">
+                <div style="width: 82%;">
+                  <div style="text-align: end;" >
+                    <ion-label style="padding-bottom: 5px;">SUBTOTAL: </ion-label>
+                    <ion-label style="padding-bottom: 5px;">IGV: </ion-label>
+                    <ion-label style="padding-bottom: 5px;"><strong>TOTAL: </strong></ion-label>
+                  </div> 
+                </div>
+                <div style="width: 10%;">
+                  <div style="text-align: end;" >
+                    <ion-label style="padding-bottom: 5px;">{{ venta.vent_total | number: '1.2-2'}}</ion-label>
+                    <ion-label style="padding-bottom: 5px;">{{ venta.vent_igv| number: '1.2-2'}} </ion-label>
+                    <ion-label style="padding-bottom: 5px;"><strong>{{ venta.vent_total| number: '1.2-2'}}</strong></ion-label>
+                  </div> 
+                </div>
+              </div>   
+            </ion-item>
+            <div style="margin-top: 20px;text-align: end;">
+              <ion-button style="width: 200px;height: 30px;font-size: 11px !important;" color="danger" (click)="atras()">
+                <ion-icon name="save-outline" style="margin-right: 10px;"></ion-icon>
+                <ion-label>ATRAS</ion-label>
+              </ion-button>
+            </div>
+          </ion-list>
+        </div>
+        
+      </ion-card-content>
+    </ion-card>
+  </div>
+</div>

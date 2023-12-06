@@ -8,6 +8,11 @@ export class Producto {
     prod_estado     : number = 0;
     prod_cantidad_venta : number = 0;
     prod_rotulacion : string = '';
-    prod_rafia      : number = 0;
-    prod_lamina     : number = 0;
+    para_rafia      : number = 0;
+    para_lamina     : number = 0;
+}
+
+export class ProductoMasVendido {
+    cantidad        : string = '';
+    vent_producto   : string= '';
 }

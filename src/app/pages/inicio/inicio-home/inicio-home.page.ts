@@ -1,6 +1,13 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { AlertController, AnimationController } from '@ionic/angular';
 import * as Highcharts from 'highcharts';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ReporteABC } from 'src/app/estructura/clases/home';
+import { ProductoMasVendido } from 'src/app/estructura/clases/producto';
+import { ServiceService } from 'src/app/service/service.service';
 
 @Component({
   selector: 'app-inicio-home',
@@ -14,29 +21,29 @@ export class InicioHomePage implements OnInit {
   updateFlag = false;
 
   data = [
-    {
-        name: 'Mariscos',
-        y: 55.02
-    },
-    {
-        name: 'Filetes',
-        /* sliced: true,
-        selected: true, */
-        y: 26.71
-    },
-    {
-        name: 'Pescado 1',
-        y: 1.09
-    },
-    {
-        name: 'Pescado 2',
-        y: 15.5
-    },
-    {
-        name: 'Pescado 3',
-        y: 1.68
-    }
-];
+      {
+          name: 'Mariscos',
+          y: 55.02
+      },
+      {
+          name: 'Filetes',
+          /* sliced: true,
+          selected: true, */
+          y: 26.71
+      },
+      {
+          name: 'Pescado 1',
+          y: 1.09
+      },
+      {
+          name: 'Pescado 2',
+          y: 15.5
+      },
+      {
+          name: 'Pescado 3',
+          y: 1.68
+      }
+  ];
 
   chartOptions: Highcharts.Options = {
     chart: {
@@ -116,10 +123,91 @@ export class InicioHomePage implements OnInit {
     },
     ],
   };
-  constructor() { }
+
+  fechaHoy = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
+  ventasDiaSoles = 0;
+  cantidadClientes = 0;
+  cantidadProveedores = 0;
+  productosVendidos: ProductoMasVendido[] = [];
+  mostrarVendidos = true;
+  reporteAbcDatos: ReporteABC[] = [];
+  consumoTotal = 0;
+  constructor(public servicio:ServiceService,private animationCtrl: AnimationController,public formBuilder: FormBuilder,private spinnerService: NgxSpinnerService,
+    private alertController: AlertController) { }
 
   ngOnInit() {
+    this.ventasDia();
+    this.clientes();
+    this.proveedores();
+    this.productosMasVendidos();
+    this.reporteAbc();
   }
+
+  ventasDia(){
+    let fecha = {
+      fecha: this.fechaHoy
+    }
+    this.servicio.ventasDia(fecha).subscribe( respuesta => {
+      console.log("ventas dia",respuesta);
+      this.ventasDiaSoles = respuesta.ventas_dia;
+    })
+  }
+
+  clientes(){
+    this.servicio.listarCliente().subscribe( respuesta => {
+      //this.clientes = respuesta;
+      console.log("clientes", respuesta.length)
+      this.cantidadClientes = respuesta.length;
+      //this.setPage1(1);
+    })
+  }
+
+  proveedores(){
+    this.servicio.listarProveedor().subscribe( respuesta => {
+      this.cantidadProveedores = respuesta.length;
+    })
+  }
+
+  productosMasVendidos(){
+    this.servicio.productosMasVendidos().subscribe( respuesta => {
+      this.productosVendidos = respuesta;
+      this.data = [];
+      this.productosVendidos.forEach(element => {
+        this.data.push({
+          name : element.vent_producto,
+          y: Number(element.cantidad)
+        })
+      });
+      this.chartOptions = {
+        series: [
+
+          {
+            type: 'pie',
+            name: 'Cantidades',
+            
+            data: this.data,
+          },
+        ],
+      }
+
+      this.mostrarVendidos = false;
+
+
+      console.log("reesopuesta", this.productosVendidos)
+    })
+  }
+
+  reporteAbc(){
+    this.servicio.reporteAbc().subscribe( respuesta => {
+      console.log("respuesta", respuesta);
+      this.reporteAbcDatos = respuesta.resultado;
+      this.reporteAbcDatos.forEach(element => {
+        this.consumoTotal = this.consumoTotal+ Number(element.consumo_anual);
+      });
+    })
+  }
+
+
   
 
 }

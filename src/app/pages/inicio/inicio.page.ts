@@ -35,8 +35,9 @@ export class InicioPage implements OnInit {
     menu: 'Compras',
     id:1,
     children: [
+      { menu: 'Compras', id: 2, ruta: 'compras'},
+      { menu: 'Lista de compras', id: 3, ruta: 'lista-compras'},
       { menu: 'Proveedores', id: 1, ruta: 'proveedores'},
-      /* { menu: 'Compras', id: 2, ruta: 'compras'} */
     ]
   },
 ]

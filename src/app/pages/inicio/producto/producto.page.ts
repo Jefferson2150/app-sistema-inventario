@@ -115,13 +115,13 @@ export class ProductoPage implements OnInit {
 
   seleccionarLamina(event:any){
     console.log("evento",event);
-    this.producto.prod_lamina = Number(event);
+    this.producto.para_lamina = Number(event);
     this.editar_lamina = Number(event);
   }
 
   seleccionarRafia(event:any){
     console.log("evento",event);
-    this.producto.prod_rafia = Number(event);
+    this.producto.para_rafia = Number(event);
     this.editar_rafia = Number(event);
   }
 
@@ -200,6 +200,8 @@ export class ProductoPage implements OnInit {
     this.myFormProducto.controls["precio"].setValue(prod.prod_precio);
     prod.prod_estado == 0 ? this.marcar = true : this.marcar = false;
     this.editar_categoria = Number(prod.prod_cat_id);
+    this.editar_lamina    = Number(prod.para_lamina);
+    this.editar_rafia     = Number(prod.para_rafia);
     this.agregarestado = false;
 
 

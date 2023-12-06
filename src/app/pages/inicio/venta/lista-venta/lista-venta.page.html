@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true">
+<div >
   <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "ball-scale-multiple" [fullScreen] = "true"
   style="z-index: 999999 !important;"><p style="color: white" > Cargando... </p>
 </ngx-spinner>
@@ -20,8 +20,9 @@
     <ion-list>
       <ion-item class="col-text div-item tamanio-letra-item">
         <ion-row style="width: 100%" class="ion-align-items-center">
-          <ion-col size="6" size-lg="3" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Codigo</strong></ion-col>
-          <ion-col size="6" size-lg="3" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Cliente</strong></ion-col>
+          <ion-col size="6" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Codigo</strong></ion-col>
+          <ion-col size="6" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Cliente</strong></ion-col>
+          <ion-col size="6" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Dirección</strong></ion-col>
           <ion-col size="3" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Fecha</strong></ion-col>
           <ion-col size="3" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Venta total( S/.)</strong></ion-col>
           <ion-col style="text-align: center;" size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Acciones</strong></ion-col>
@@ -30,16 +31,17 @@
 
       <ion-item  *ngFor="let lista_venta of ventas; let indice=index;" class="tamanio-letra-item">
         <ion-row style="width: 100%" class="ion-align-items-center">
-          <ion-col size="6" size-lg="3" size-md="2" size-sm="2" class="div-detalle-producto">{{ lista_venta.vent_id}}</ion-col>
-          <ion-col size="6" size-lg="3" size-md="2" size-sm="2" class="div-detalle-producto">Cliente</ion-col>
+          <ion-col size="6" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">{{ lista_venta.vent_id}}</ion-col>
+          <ion-col size="6" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">{{ lista_venta.cliente }}</ion-col>
+          <ion-col size="6" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">{{ lista_venta.vent_direccion }}</ion-col>
           <ion-col size="3" size-lg="2" size-md="2" size-sm="2" >{{ lista_venta.vent_fecha}}</ion-col>
           <ion-col size="3" size-lg="2" size-md="2" size-sm="2" >{{ lista_venta.vent_total}}</ion-col>
           <ion-col size="3" size-lg="2" size-md="2" size-sm="2" style="text-align: center;">
-            <ion-icon name="open-outline" style="font-size: 20px;cursor: pointer;color: #00bd00;" ></ion-icon>
+            <ion-icon name="open-outline" style="font-size: 20px;cursor: pointer;color: #00bd00;" (click)="detalleVenta(lista_venta)" ></ion-icon>
           </ion-col>
           
         </ion-row>
       </ion-item>
     </ion-list>
   </div>
-</ion-content>
+</div>

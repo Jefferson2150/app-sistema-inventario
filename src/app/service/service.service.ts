@@ -89,14 +89,31 @@ export class ServiceService {
   eliminarCliente(id:number, cliente:Cliente){
     return this.http!.put<any>(this.Url+`/editar_eliminar_clientes/`+id+`/deleted`,cliente);
   }
-
+   
   listarVentas(){
-    return this.http!.get<any>(this.Url+`/obtener_ventas`);
+    return this.http!.get<any>(this.Url+`/obtener_venta`);
+  }
+
+  ventasDia(fecha:any){
+    return this.http!.post<any>(this.Url+`/ventas-dia`,fecha);
+  }
+
+  productosMasVendidos(){
+    return this.http!.get<any>(this.Url+`/productos_mas_vendidos`);
+  }
+
+  reporteAbc(){
+    return this.http!.get<any>(this.Url+`/reporte_abc`);
   }
 
 
 
-  getPager(totalItems: number, currentPage: number = 1, pageSize: number = 3) {
+
+
+
+
+
+  getPager(totalItems: number, currentPage: number = 1, pageSize: number = 9) {
     // calculate total pagess
     let totalPages = Math.ceil(totalItems / pageSize);
     // ensure current page isn't out of range
@@ -173,7 +190,7 @@ export class ServiceService {
   async toast(position:any, descripcion:any,color:any) {
     const toast = await this.toastController!.create({
       message: descripcion,
-      duration: 1500,
+      duration: 3500,
       color: color,
       position: position,
     });

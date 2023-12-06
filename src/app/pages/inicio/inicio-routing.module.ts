@@ -22,7 +22,11 @@ const routes: Routes = [
       },
       {
         path: 'lista-ventas',
-        loadChildren: () => import('./venta/lista-venta/lista-venta.module').then( m => m.ListaVentaPageModule)
+        loadChildren: () => import('./venta/lista-venta/lista-venta.module').then( m => m.ListaVentaPageModule),
+      },
+      {
+        path: 'lista-ventas/detalle/:id',
+        loadChildren: () => import('./venta/detalle-venta/detalle-venta.module').then( m => m.DetalleVentaPageModule),
       },
       {
         path: 'compras',
