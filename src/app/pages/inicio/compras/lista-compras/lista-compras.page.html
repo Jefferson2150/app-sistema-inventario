@@ -1,13 +1,41 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>lista-compras</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div >
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "ball-scale-multiple" [fullScreen] = "true"
+  style="z-index: 999999 !important;"><p style="color: white" > Cargando... </p>
+</ngx-spinner>
+  <div >
+    <ion-item style="width: 100%;display: flex;
+    flex-direction: row;">
+      <div style="width: 280px;">
+        <h3>Lista de Compras</h3>
+      </div>
+    </ion-item>
+  </div>
+  <div>
+    <ion-list>
+      <ion-item class="col-text div-item tamanio-letra-item">
+        <ion-row style="width: 100%" class="ion-align-items-center">
+          <ion-col size="6" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Codigo</strong></ion-col>
+          <ion-col size="6" size-lg="4" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Proveedor</strong></ion-col>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">lista-compras</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+          <ion-col size="3" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Fecha</strong></ion-col>
+          <ion-col size="3" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Compra total( S/.)</strong></ion-col>
+          <ion-col style="text-align: center;" size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Acciones</strong></ion-col>
+        </ion-row>
+      </ion-item>
+
+      <ion-item  *ngFor="let lista_compra of compras; let indice=index;" class="tamanio-letra-item">
+        <ion-row style="width: 100%" class="ion-align-items-center">
+          <ion-col size="6" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">{{ lista_compra.comp_id}}</ion-col>
+          <ion-col size="6" size-lg="4" size-md="2" size-sm="2" class="div-detalle-producto">{{ lista_compra.proveedor }}</ion-col>
+
+          <ion-col size="3" size-lg="2" size-md="2" size-sm="2" >{{ lista_compra.comp_fecha}}</ion-col>
+          <ion-col size="3" size-lg="2" size-md="2" size-sm="2" >{{ lista_compra.comp_total}}</ion-col>
+          <ion-col size="3" size-lg="2" size-md="2" size-sm="2" style="text-align: center;">
+            <ion-icon name="open-outline" style="font-size: 20px;cursor: pointer;color: #00bd00;" (click)="detalleCompra(lista_compra)" ></ion-icon>
+          </ion-col>
+          
+        </ion-row>
+      </ion-item>
+    </ion-list>
+  </div>
+</div>

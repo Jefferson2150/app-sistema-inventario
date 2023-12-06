@@ -7,6 +7,7 @@ import { Producto } from '../estructura/clases/producto';
 import { Proveedor } from '../estructura/clases/proveedor';
 import { Venta } from '../estructura/clases/venta';
 import { Cliente } from '../estructura/clases/cliente';
+import { Compra } from '../estructura/clases/compra';
 
 @Injectable({
   providedIn: 'root'
@@ -103,7 +104,23 @@ export class ServiceService {
   }
 
   reporteAbc(){
-    return this.http!.get<any>(this.Url+`/reporte_abc`);
+    return this.http!.get<any>(this.Url+`/reporte_abc/reporte`);
+  }
+
+  registrarCompra(compra:Compra){
+    return this.http!.post<any>(this.Url+"/registar_compra",compra);
+  }
+
+  listarCompras(){
+    return this.http!.get<any>(this.Url+`/obtener_compra`);
+  }
+
+  comprasDia(fecha:any){
+    return this.http!.post<any>(this.Url+`/compras-dia`,fecha);
+  }
+
+  resumenAbc(){
+    return this.http!.get<any>(this.Url+`/reporte_abc/resumen`);
   }
 
 

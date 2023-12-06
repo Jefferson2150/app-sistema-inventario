@@ -57,7 +57,7 @@
                 </ion-col>
                 <ion-col size="9" size-lg="9" size-md="9" size-sm="9" >
                   <div style="    margin-left: 20px;">
-                    <ion-label class="tamanio-label">S/ 20.000</ion-label><br>
+                    <ion-label class="tamanio-label">S/ {{ comprasDiaSoles | number: '1.2-2' }}</ion-label><br>
                     <ion-label class="tamanio-descripcion">COMPRAS</ion-label>
                   </div>
 
@@ -133,26 +133,10 @@
             <ion-col size="4" size-lg="4" size-md="4" size-sm="4" >
               <ion-list>
                 <h4>Productos clasificación C</h4>
-                <ion-item>
-                  <ion-label style="font-size: 13px;">Mariscos</ion-label>
-                  <ion-badge color="primary">22k</ion-badge>
+                <ion-item *ngFor="let productos of resumenAbcDatos; let indice=index;" >
+                  <ion-label style="font-size: 13px;">{{ productos.producto }}</ion-label>
+                  <ion-badge style="background-color: #8f8f8f;">{{ productos.unidades_consumidas }}</ion-badge>
                 </ion-item>
-                <ion-item>
-                  <ion-label style="font-size: 13px;">Filetes</ion-label>
-                  <ion-badge color="secondary">118k</ion-badge>
-                </ion-item>
-                <ion-item>
-                  <ion-label style="font-size: 13px;">Pescado 1</ion-label>
-                  <ion-badge color="tertiary">34k</ion-badge>
-                </ion-item>
-                <!-- <ion-item>
-                  <ion-label style="font-size: 13px;">Pescado 2</ion-label>
-                  <ion-badge color="success">80</ion-badge>
-                </ion-item>
-                <ion-item>
-                  <ion-label style="font-size: 13px;">Pescado 3</ion-label>
-                  <ion-badge color="warning">70</ion-badge>
-                </ion-item> -->
               </ion-list>
             </ion-col>
           </ion-row>          
@@ -168,7 +152,8 @@
         <ion-list>
           <ion-item class="col-text div-item tamanio-letra-item">
             <ion-row style="width: 100%" class="ion-align-items-center">
-              <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Valor del artículo</strong></ion-col>
+              <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Producto</strong></ion-col>
+              <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Valor del producto</strong></ion-col>
               <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Unidades consumidas</strong></ion-col>
               <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>Consumo anual(S/)</strong></ion-col>
               <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>% del total anual</strong></ion-col>
@@ -177,6 +162,7 @@
           </ion-item>
           <ion-item class="col-text div-item tamanio-letra-item"  *ngFor="let reportes of reporteAbcDatos; let indice=index;" >
             <ion-row style="width: 100%" class="ion-align-items-center">
+              <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto"><strong>{{ reportes.producto }}</strong></ion-col>
               <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">{{ reportes.valor_articulo}}</ion-col>
               <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">{{ reportes.unidades_consumidas}}</ion-col>
               <ion-col size="2" size-lg="2" size-md="2" size-sm="2" class="div-detalle-producto">{{ reportes.consumo_anual}}</ion-col>

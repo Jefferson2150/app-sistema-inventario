@@ -126,11 +126,13 @@ export class InicioHomePage implements OnInit {
 
   fechaHoy = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
   ventasDiaSoles = 0;
+  comprasDiaSoles = 0;
   cantidadClientes = 0;
   cantidadProveedores = 0;
   productosVendidos: ProductoMasVendido[] = [];
   mostrarVendidos = true;
   reporteAbcDatos: ReporteABC[] = [];
+  resumenAbcDatos: ReporteABC[] = [];
   consumoTotal = 0;
   constructor(public servicio:ServiceService,private animationCtrl: AnimationController,public formBuilder: FormBuilder,private spinnerService: NgxSpinnerService,
     private alertController: AlertController) { }
@@ -141,6 +143,8 @@ export class InicioHomePage implements OnInit {
     this.proveedores();
     this.productosMasVendidos();
     this.reporteAbc();
+    this.comprasDia();
+    this.resumenAbc();
   }
 
   ventasDia(){
@@ -150,6 +154,16 @@ export class InicioHomePage implements OnInit {
     this.servicio.ventasDia(fecha).subscribe( respuesta => {
       console.log("ventas dia",respuesta);
       this.ventasDiaSoles = respuesta.ventas_dia;
+    })
+  }
+
+  comprasDia(){
+    let fecha = {
+      fecha: this.fechaHoy
+    }
+    this.servicio.comprasDia(fecha).subscribe( respuesta => {
+      console.log("ventas dia",respuesta);
+      this.comprasDiaSoles = respuesta.compras_dia;
     })
   }
 
@@ -204,6 +218,13 @@ export class InicioHomePage implements OnInit {
       this.reporteAbcDatos.forEach(element => {
         this.consumoTotal = this.consumoTotal+ Number(element.consumo_anual);
       });
+    })
+  }
+
+  resumenAbc(){
+    this.servicio.resumenAbc().subscribe( respuesta => {
+      console.log("resumen", respuesta);
+      this.resumenAbcDatos = respuesta.resultado;
     })
   }
 

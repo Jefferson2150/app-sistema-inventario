@@ -33,6 +33,14 @@ const routes: Routes = [
         loadChildren: () => import('./compras/compras.module').then( m => m.ComprasPageModule)
       },
       {
+        path: 'lista-compras',
+        loadChildren: () => import('./compras/lista-compras/lista-compras.module').then( m => m.ListaComprasPageModule)
+      },
+      {
+        path: 'lista-compras/detalle/:id',
+        loadChildren: () => import('./compras/detalle-compra/detalle-compra.module').then( m => m.DetalleCompraPageModule),
+      },
+      {
         path: 'proveedores',
         loadChildren: () => import('./compras/proveedores/proveedores.module').then( m => m.ProveedoresPageModule)
       },

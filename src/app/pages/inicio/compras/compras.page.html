@@ -1,4 +1,7 @@
 <div >
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "ball-scale-multiple" [fullScreen] = "true"
+    style="z-index: 999999 !important;"><p style="color: white" > Registrando compra... </p>
+  </ngx-spinner>
     <div style="width: 280px;margin-left: 15px;">
       <h3 style="margin: 0px;">REGISTRAR COMPRAS</h3>
     </div>
@@ -12,26 +15,29 @@
           <ion-card-title style="font-size: 15px;color: #000;">DATOS</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <div>
-            <ion-label style=" margin-left: 15px;">Usuario</ion-label>
-            <ion-item >
-             <ion-input type="text" placeholder="Administador"></ion-input>
-            </ion-item>
-          </div>
-          <div>
-            <ion-label style=" margin-left: 15px;">Proveedor</ion-label>
-            <ion-item >
-              <ion-select interface="action-sheet"  placeholder="Seleccione proveedor" cancel-text="Cancelar" (ionChange)="seleccionarProveedor($any($event.target).value)" >
-                <ion-select-option value="{{proveedor.prov_id}}" *ngFor="let proveedor of listaProveedores" >{{proveedor.prov_nombre}}</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </div>
-          <div>
-            <ion-label style="    margin-left: 15px;">Fecha</ion-label>
-            <ion-item >
-              <ion-input type="date" placeholder="Awesome Input"></ion-input>
-            </ion-item>
-          </div>
+          <form [formGroup]="myFormCompra" #formDirective="ngForm"  class="formulario">
+            <div>
+              <ion-label style=" margin-left: 15px;">Usuario</ion-label>
+              <ion-item >
+               <ion-input formControlName="usuario" type="text" placeholder="Administador"></ion-input>
+              </ion-item>
+            </div>
+            <div>
+              <ion-label style=" margin-left: 15px;">Proveedor</ion-label>
+              <ion-item >
+                <ion-select interface="action-sheet"  placeholder="Seleccione proveedor" cancel-text="Cancelar" (ionChange)="seleccionarProveedor($any($event.target).value)" >
+                  <ion-select-option value="{{proveedor.prov_id}}" *ngFor="let proveedor of listaProveedores" >{{proveedor.prov_nombre}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
+            <div>
+              <ion-label style="margin-left: 15px;">Fecha</ion-label>
+              <ion-item >
+                <ion-input formControlName="fechaCompra" type="date" placeholder="Awesome Input"></ion-input>
+              </ion-item>
+            </div>
+          </form>
+
         </ion-card-content>
       </ion-card>
     </div>
@@ -99,7 +105,7 @@
         <div>
           <h3 style="text-align: center;">DATOS COMPRA</h3>
         </div>
-        <form [formGroup]="myFormVenta" #formDirective="ngForm"  class="formulario">
+
           <div style="margin-bottom:20px;">
           </div>
           <div>
@@ -115,19 +121,19 @@
                   <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto" style="text-align: end;"><strong>SUBTOTAL</strong></ion-col>
                 </ion-row>
               </ion-item>
-              <ion-item class="col-text div-item tamanio-letra-item" *ngFor="let venta of venta_detalle">
+              <ion-item class="col-text div-item tamanio-letra-item" *ngFor="let compra of compra_detalle">
                 <ion-row style="width: 100%" class="ion-align-items-center" >
                   <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto" >
                     <ion-icon name="close-circle-outline" style="font-size: 23px;
                     color: red;
-                    cursor: pointer;" (click)="eliminarItemVenta(venta)"></ion-icon>
+                    cursor: pointer;" (click)="eliminarItemVenta(compra)"></ion-icon>
                   </ion-col>
-                  <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto" >{{venta.vent_item}}</ion-col>
-                  <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto">{{venta.vent_cantidad}}</ion-col>
-                  <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto">{{venta.vent_producto}}</ion-col>
-                  <ion-col size="4" size-lg="4" size-md="4" size-sm="4" class="div-detalle-producto" style="text-align: center;">{{venta.vent_unidad}}</ion-col>
-                  <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto"><strong>{{venta.vent_valor| number: '1.2-2'}}</strong></ion-col>
-                  <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto" style="text-align: end;"><strong>{{venta.vent_subtotal| number: '1.2-2'}}</strong></ion-col>
+                  <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto" >{{compra.comp_det_item}}</ion-col>
+                  <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto">{{compra.comp_det_cantidad}}</ion-col>
+                  <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto">{{compra.comp_det_producto}}</ion-col>
+                  <ion-col size="4" size-lg="4" size-md="4" size-sm="4" class="div-detalle-producto" style="text-align: center;">{{compra.comp_det_unidad}}</ion-col>
+                  <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto"><strong>{{compra.comp_det_valor| number: '1.2-2'}}</strong></ion-col>
+                  <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto" style="text-align: end;"><strong>{{compra.comp_det_subtotal| number: '1.2-2'}}</strong></ion-col>
                 </ion-row>
               </ion-item>
               <ion-item style="margin-top: 25px;">
@@ -164,7 +170,7 @@
             </ion-list>
   
           </div>
-        </form>
+ 
 
       </ion-card-content>
     </ion-card>

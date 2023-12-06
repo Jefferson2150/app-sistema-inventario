@@ -2,7 +2,7 @@
   <ion-item style="width: 100%;display: flex;
   flex-direction: row;">
     <div style="width: 100%;">
-      <h3 style="text-align: center;">DETALLE DE VENTA</h3>
+      <h3 style="text-align: center;">DETALLE DE COMPRA</h3>
     </div>
   </ion-item>
   <div>
@@ -14,27 +14,28 @@
               <ion-col size="6" [sizeLg]="6" [sizeMd]="6" >
                 <ion-item>
                   <ion-label> <strong>Usuario</strong></ion-label>
-                  <ion-input [(ngModel)]="venta.us_username" placeholder="Usuario" value="Administrador" ></ion-input>
+                  <ion-input [(ngModel)]="compra.us_username" placeholder="Usuario" value="Administrador" ></ion-input>
                 </ion-item>
               </ion-col>
               <ion-col size="6" [sizeLg]="4" [sizeMd]="4" >
                 <ion-item>
                   <ion-label for="" style="margin-right: 10px;">Fecha </ion-label>
-                  <ion-input [(ngModel)]="venta.vent_fecha" type="date" style="min-height: 49px;"></ion-input>
+                  <ion-input [(ngModel)]="compra.comp_fecha" type="date" style="min-height: 49px;"></ion-input>
                 </ion-item>
               </ion-col>
               <ion-col size="6" [sizeLg]="6" [sizeMd]="6" >
                 <ion-item>
-                  <ion-label> <strong>Cliente</strong></ion-label>
-                  <ion-input [(ngModel)]="venta.cliente" placeholder="Ingrese cliente "  value="Jorge Enrique Paz"></ion-input>
+                  <ion-label> <strong>Proveedor</strong></ion-label>
+                  <ion-input [(ngModel)]="compra.proveedor" placeholder="Ingrese cliente "  value="Jorge Enrique Paz"></ion-input>
+                
                 </ion-item>
               </ion-col>
-              <ion-col size="6" [sizeLg]="6" [sizeMd]="6" >
+             <!--  <ion-col size="6" [sizeLg]="6" [sizeMd]="6" >
                 <ion-item>
                   <ion-label> <strong>Dirección</strong></ion-label>
-                  <ion-input [(ngModel)]="venta.vent_direccion" placeholder="Ingrese dirección " ></ion-input>
+                  <ion-input [(ngModel)]="compra.comp_direccion" placeholder="Ingrese dirección " ></ion-input>
                 </ion-item>
-              </ion-col>
+              </ion-col> -->
             </ion-row>
           </ion-list>
 
@@ -44,19 +45,19 @@
                 <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto" ><strong>ITEM</strong></ion-col>
                 <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto"><strong>CANT</strong></ion-col>
                 <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto"><strong>PRODUCTO</strong></ion-col>
-                <ion-col size="4" size-lg="4" size-md="4" size-sm="4" class="div-detalle-producto" style="text-align: center;"><strong>UND</strong></ion-col>
+                <ion-col size="4" size-lg="4" size-md="4" size-sm="4" class="div-detalle-producto" style="text-align: center;"><strong>KG</strong></ion-col>
                 <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto"><strong>V.U</strong></ion-col>
                 <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto" style="text-align: end;"><strong>SUBTOTAL</strong></ion-col>
               </ion-row>
             </ion-item>
-            <ion-item class="col-text div-item tamanio-letra-item" *ngFor="let venta of venta.detalles">
+            <ion-item class="col-text div-item tamanio-letra-item" *ngFor="let compra_detalle of compra.detalles">
               <ion-row style="width: 100%" class="ion-align-items-center" >
-                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto" >{{venta.vent_item}}</ion-col>
-                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto">{{venta.vent_cantidad}}</ion-col>
-                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto">{{venta.vent_producto}}</ion-col>
-                <ion-col size="4" size-lg="4" size-md="4" size-sm="4" class="div-detalle-producto" style="text-align: center;">{{venta.vent_unidad}}</ion-col>
-                <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto"><strong>{{venta.vent_valor| number: '1.2-2'}}</strong></ion-col>
-                <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto" style="text-align: end;"><strong>{{venta.vent_subtotal| number: '1.2-2'}}</strong></ion-col>
+                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto" >{{compra_detalle.comp_det_item}}</ion-col>
+                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto">{{compra_detalle.comp_det_cantidad}}</ion-col>
+                <ion-col size="1" size-lg="1" size-md="1" size-sm="1" class="div-detalle-producto">{{compra_detalle.comp_det_producto}}</ion-col>
+                <ion-col size="4" size-lg="4" size-md="4" size-sm="4" class="div-detalle-producto" style="text-align: center;">{{compra_detalle.comp_det_unidad}}</ion-col>
+                <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto"><strong>{{compra_detalle.comp_det_valor| number: '1.2-2'}}</strong></ion-col>
+                <ion-col size="2" size-lg="2" size-md="3" size-sm="3" class="div-detalle-producto" style="text-align: end;"><strong>{{compra_detalle.comp_det_subtotal| number: '1.2-2'}}</strong></ion-col>
               </ion-row>
             </ion-item>
             <ion-item style="margin-top: 25px;">
@@ -73,9 +74,9 @@
                 </div>
                 <div style="width: 10%;">
                   <div style="text-align: end;" >
-                    <ion-label style="padding-bottom: 5px;">{{ venta.vent_total | number: '1.2-2'}}</ion-label>
-                    <ion-label style="padding-bottom: 5px;">{{ venta.vent_igv| number: '1.2-2'}} </ion-label>
-                    <ion-label style="padding-bottom: 5px;"><strong>{{ venta.vent_total| number: '1.2-2'}}</strong></ion-label>
+                    <ion-label style="padding-bottom: 5px;">{{ compra.comp_total | number: '1.2-2'}}</ion-label>
+                    <ion-label style="padding-bottom: 5px;">{{ compra.comp_igv| number: '1.2-2'}} </ion-label>
+                    <ion-label style="padding-bottom: 5px;"><strong>{{ compra.comp_total| number: '1.2-2'}}</strong></ion-label>
                   </div> 
                 </div>
               </div>   

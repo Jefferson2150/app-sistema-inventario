@@ -1,5 +1,8 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit,AfterViewInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Compra, CompraDetalle } from 'src/app/estructura/clases/compra';
 import { Producto } from 'src/app/estructura/clases/producto';
 import { Proveedor } from 'src/app/estructura/clases/proveedor';
 import { VentaDetalle } from 'src/app/estructura/clases/venta';
@@ -17,14 +20,18 @@ export class ComprasPage implements OnInit {
   listaProveedores: Proveedor[] = [];
   productos : Producto[]= [];
   filtro :any[] = [];
-  myFormVenta!   : FormGroup;
+  myFormCompra!   : FormGroup;
   venta_detalle    : VentaDetalle[] = [];
+  compra_detalle  : CompraDetalle[] = [];
   subtotal  : number = 0;
   igv       : number = 0;
   total     : number = 0;
-  constructor(public servicio:ServiceService) { }
+  compra  : Compra = new Compra();
+  fechaHoy = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
+  constructor(public formBuilder: FormBuilder,public servicio:ServiceService,private spinnerService: NgxSpinnerService) { }
 
   ngOnInit() {
+    this.cargarFormulario();
     this.proveedores();
     this.listarProductos();
   }
@@ -40,6 +47,15 @@ export class ComprasPage implements OnInit {
       });
     }
   }
+
+  cargarFormulario (){
+    this.myFormCompra = this.formBuilder.group({
+      usuario       : [{value: 'Administrador', disabled: true}, [Validators.required]],
+      fechaCompra   : [this.fechaHoy, [Validators.required]],
+      direccion     : ['', ],
+    });
+  }
+
 
   proveedores(){
     this.servicio.listarProveedor().subscribe( respuesta => {
@@ -60,7 +76,7 @@ export class ComprasPage implements OnInit {
 
 
   seleccionarProveedor(event:any){
-
+    this.compra.comp_proveedor = Number(event);
   }
 
   editarItem(evento:any,prod:Producto){
@@ -77,7 +93,16 @@ export class ComprasPage implements OnInit {
       this.servicio.toast('top','Cantidad tiene que ser mayor a 0','warning');
     }else{
       console.log("produccion", (prod.prod_precio * prod.prod_cantidad),);
-      this.venta_detalle.push({
+      this.compra_detalle.push({
+        comp_det_id: 0,
+        comp_det_item: 1,
+        comp_det_cantidad: prod.prod_cantidad_venta,
+        comp_det_unidad: 'KG',
+        comp_det_producto: prod.prod_nombre,
+        comp_det_valor:  prod.prod_precio,
+        comp_det_subtotal: (prod.prod_precio * prod.prod_cantidad_venta),
+      })
+/*       this.venta_detalle.push({
         vent_id           : 1,
         vent_item         : 1,
         vent_cantidad   : prod.prod_cantidad_venta,
@@ -85,7 +110,7 @@ export class ComprasPage implements OnInit {
         vent_producto   : prod.prod_nombre,
         vent_valor      : prod.prod_precio,
         vent_subtotal   : (prod.prod_precio * prod.prod_cantidad_venta),
-      });
+      }); */
       this.ordenarItem();
       //this.subtotal = this.subtotal + prod.prod_precio;
       this.total    = this.total + (prod.prod_precio * prod.prod_cantidad_venta);
@@ -94,27 +119,60 @@ export class ComprasPage implements OnInit {
     }
   }
 
-  eliminarItemVenta(vent:VentaDetalle){
-    let filter = this.venta_detalle.filter( x => x != vent);
+  eliminarItemVenta(compra:CompraDetalle){
+    let filter = this.compra_detalle.filter( x => x != compra);
     console.log("filter", filter)
-    this.venta_detalle = filter;
-    this.total    = this.total  - vent.vent_subtotal;
+    this.compra_detalle = filter;
+    this.total    = this.total  - compra.comp_det_subtotal;
     this.igv      = (this.total*18)/100;
     this.subtotal = this.total - this.igv;
     this.ordenarItem();
   }
 
   ordenarItem(){
-    this.venta_detalle.forEach( (item,index) =>{
-      item.vent_item = index +1;
+    this.compra_detalle.forEach( (item,index) =>{
+      item.comp_det_item = index +1;
     })
   }
 
   registrarCompra(){
-
+    this.compra.comp_total     = this.total;
+    this.compra.comp_igv       =  this.igv;
+    this.compra.comp_subtotal  = this.subtotal;
+    this.compra.compra_detalle  = this.compra_detalle;
+    this.compra.comp_usuario   = 1;
+    //this.venta.vent_cliente   = 0;
+    this.compra.comp_direccion = '';
+    this.compra.comp_fecha     = this.myFormCompra.value.fechaCompra;
+    console.log("compra", this.compra);
+    if(this.compra_detalle.length == 0 ){
+      this.servicio.toast('top','Ingrese una producto a la venta','warning');
+    }else{
+      this.spinnerService.show();
+      this.servicio.registrarCompra(this.compra).subscribe( respuesta => {
+        console.log("datos de venta", respuesta);
+        if(respuesta.est == 'success'){
+          setTimeout(() => {
+            this.spinnerService.hide();
+            this.servicio.toast('top',respuesta.message,'success');
+            this.cancelarCompra();
+          }, 1000);
+        }else{
+          setTimeout(() => {
+            this.spinnerService.hide();
+            this.servicio.toast('top',respuesta.message,'error')
+          }, 1000);
+        }
+      })
+    }
   }
 
   cancelarCompra(){
-
+    this.myFormCompra.controls["direccion"].setValue('');
+    this.compra_detalle = [];
+    this.compra = new Compra();
+    this.total    = 0;
+    this.igv      = 0;
+    this.subtotal = 0;
   }
 }
